@@ -1,15 +1,17 @@
 package tn.esprit.BookStore.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Answer {
+public class Answer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private int id;
-
     @Column(name="first_answer")
     private String firstAnswer;
     @Column(name="second_answer")
@@ -19,17 +21,16 @@ public class Answer {
     @Column(name="correct_answer")
     private String correctAnswer;
 
-
-    public Answer() {
-
-    }
-
     public Answer(int id, String firstAnswer, String secondAnswer, String thirdAnswer, String correctAnswer) {
         this.id = id;
         this.firstAnswer = firstAnswer;
         this.secondAnswer = secondAnswer;
         this.thirdAnswer = thirdAnswer;
         this.correctAnswer = correctAnswer;
+    }
+
+    public Answer() {
+
     }
 
     public int getId() {
@@ -71,6 +72,7 @@ public class Answer {
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
+
 
     @Override
     public boolean equals(Object o) {

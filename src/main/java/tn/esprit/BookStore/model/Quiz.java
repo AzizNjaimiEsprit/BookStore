@@ -1,9 +1,6 @@
 package tn.esprit.BookStore.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,16 +8,16 @@ import java.util.Objects;
 public class Quiz implements Serializable {
 
     @Id
-    @ManyToOne(targetEntity=User.class)
-    @JoinColumn(name="user_id",referencedColumnName="id")
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private User user;
     @Id
-    @ManyToOne(targetEntity=OnlineBook.class)
-    @JoinColumn(name="book_id",referencedColumnName="id")
+    @ManyToOne
+    @JoinColumn(name="book_id", nullable=false)
     private OnlineBook book;
     @Id
-    @ManyToOne(targetEntity=Question.class)
-    @JoinColumn(name="question_id",referencedColumnName="id")
+    @ManyToOne
+    @JoinColumn(name="question_id", nullable=false)
     private Question question;
 
     public Quiz() {

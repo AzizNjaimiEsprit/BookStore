@@ -2,19 +2,19 @@ package tn.esprit.BookStore.model;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Chat {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column
     private int id;
+    @Column
     @NotNull
     private String question;
+    @Column
     @NotNull
     private String reponse;
 

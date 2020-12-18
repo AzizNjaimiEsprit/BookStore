@@ -1,19 +1,23 @@
 package tn.esprit.BookStore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Question {
+public class Question implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private int id;
 
-    @ManyToOne(targetEntity=Answer.class)
-    @JoinColumn(name="answer_id",referencedColumnName="id")
+    @ManyToOne
+    @JoinColumn(name="answer_id", nullable=false)
     private Answer answer;
-
+    @Column
     private String question;
 
     public Question() {
@@ -62,6 +66,7 @@ public class Question {
     public int hashCode() {
         return Objects.hash(id, answer);
     }
+
 
     @Override
     public String toString() {

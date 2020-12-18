@@ -2,21 +2,18 @@ package tn.esprit.BookStore.model;
 
 import javax.persistence.*;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import java.io.Serializable;
 
 @Entity
-@IdClass(LibraryId.class)
-public class Library {
+public class Library implements Serializable{
 
 	@Id
-	@ManyToOne(targetEntity=User.class)
-	@JoinColumn(name="user_id",referencedColumnName="id")
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable=false)
 	private User user;
 	@Id
-	@ManyToOne(targetEntity=OnlineBook.class)
-	@JoinColumn(name="book_id",referencedColumnName="id")
+	@ManyToOne
+	@JoinColumn(name="book_id", nullable=false)
 	private OnlineBook book;
 	@Column(name="status")
     private String status="Recently added";
