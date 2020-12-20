@@ -9,22 +9,21 @@ import tn.esprit.BookStore.model.Response;
 import tn.esprit.BookStore.service.AnswerService;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class AnswerControl {
 
     @Autowired
-    AnswerService answerService;
+    AnswerService<Answer> answerService;
 
     private static final Gson gson=new Gson();
 
     @PostMapping("/answer")
-    public ResponseEntity addAnswer(@RequestBody Answer answer){
+    public ResponseEntity<String> addAnswer(@RequestBody Answer answer){
         try{
-            answerService.save(answer);
-            return ResponseEntity.status(201).body(gson.toJson(Response.getInstance("Answer has been added successfully",null)));
+             Answer newAnswer =answerService.save(answer);
+            return ResponseEntity.status(201).body(gson.toJson(Response.getInstance("Answer has been added successfully",newAnswer)));
         }
         catch(Exception e){
             return ResponseEntity.status(400).body(gson.toJson(Response.getInstance("An error has been occurred!",null)));
@@ -32,7 +31,7 @@ public class AnswerControl {
     }
 
     @PutMapping("/answer/{id}")
-    public ResponseEntity editAnswer(@PathVariable int id,@RequestBody Answer answer){
+    public ResponseEntity<String> editAnswer(@PathVariable int id,@RequestBody Answer answer){
         try{
             Optional<Answer> oldAnswer=answerService.findAnswerById(id);
             if(oldAnswer.isPresent()) {
@@ -57,7 +56,7 @@ public class AnswerControl {
 
 
     @GetMapping("/answer/{id}")
-    public ResponseEntity getAnswerById(@PathVariable int id){
+    public ResponseEntity<String> getAnswerById(@PathVariable int id){
         try{
             Optional<Answer> answer= answerService.findAnswerById(id);
             return ResponseEntity.status(200).body(gson.toJson(Response.getInstance(null,answer)));
@@ -68,7 +67,7 @@ public class AnswerControl {
         catch(Exception e){
             return ResponseEntity.status(400).body(gson.toJson(Response.getInstance("An error has been occurred!",null)));
         }
-    };
+    }
 
 
 }

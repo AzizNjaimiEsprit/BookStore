@@ -16,8 +16,10 @@ public class AnswerServiceImp implements AnswerService<Answer> {
     AnswerRepo answerRepo;
 
     @Override
-    public void save(Answer answer) {
-        answerRepo.save(answer);
+    public Answer save(Answer answer) {
+
+        Answer newAnswer= answerRepo.save(answer);
+        return newAnswer;
     }
 
     @Override

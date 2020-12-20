@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface AnswerService<T> {
 
-    void save(T t);
+    T save(T t);
 
     void edit(T t);
 
