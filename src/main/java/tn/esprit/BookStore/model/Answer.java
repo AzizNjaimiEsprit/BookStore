@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Answer implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
     @Column(name="first_answer")
@@ -21,8 +21,8 @@ public class Answer implements Serializable {
     @Column(name="correct_answer")
     private String correctAnswer;
 
-    public Answer(int id, String firstAnswer, String secondAnswer, String thirdAnswer, String correctAnswer) {
-        this.id = id;
+    public Answer(int id,String firstAnswer, String secondAnswer, String thirdAnswer, String correctAnswer) {
+        this.id=id;
         this.firstAnswer = firstAnswer;
         this.secondAnswer = secondAnswer;
         this.thirdAnswer = thirdAnswer;

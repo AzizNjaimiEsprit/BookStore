@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 public class Chat {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column
     private int id;
     @Column

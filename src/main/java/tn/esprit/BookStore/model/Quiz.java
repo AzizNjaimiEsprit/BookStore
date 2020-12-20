@@ -8,14 +8,11 @@ import java.util.Objects;
 public class Quiz implements Serializable {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
-    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @ManyToOne
     @JoinColumn(name="book_id", nullable=false)
     private OnlineBook book;
-    @Id
     @ManyToOne
     @JoinColumn(name="question_id", nullable=false)
     private Question question;
@@ -23,18 +20,18 @@ public class Quiz implements Serializable {
     public Quiz() {
     }
 
-    public Quiz(User user, OnlineBook book, Question question) {
-        this.user = user;
+    public Quiz(int id, OnlineBook book, Question question) {
+        this.id = id;
         this.book = book;
         this.question = question;
     }
 
-    public User getUser() {
-        return user;
+    public int getId() {
+        return id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public OnlineBook getBook() {
@@ -58,20 +55,20 @@ public class Quiz implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quiz quiz = (Quiz) o;
-        return Objects.equals(user, quiz.user) &&
+        return id == quiz.id &&
                 Objects.equals(book, quiz.book) &&
                 Objects.equals(question, quiz.question);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, book, question);
+        return Objects.hash(id, book, question);
     }
 
     @Override
     public String toString() {
         return "Quiz{" +
-                "user=" + user +
+                "id=" + id +
                 ", book=" + book +
                 ", question=" + question +
                 '}';
