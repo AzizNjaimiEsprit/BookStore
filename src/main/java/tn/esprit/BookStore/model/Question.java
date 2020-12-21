@@ -14,8 +14,8 @@ public class Question implements Serializable {
     @Column
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="answer_id", nullable=false)
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name="answer_id", nullable=false,unique = true)
     private Answer answer;
     @Column
     private String question;
