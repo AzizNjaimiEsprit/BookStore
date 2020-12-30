@@ -10,6 +10,7 @@ import tn.esprit.BookStore.repository.QuizRepo;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class QuizServiceImp implements QuizService<Quiz> {
@@ -50,8 +51,8 @@ public class QuizServiceImp implements QuizService<Quiz> {
     }
 
     @Override
-    public ArrayList<Quiz> findQuizByBook(int bookId) {
-
-        return  quizRepo.findQuizByBookId(bookId);
+    public List<Quiz> findQuizByBook(int bookId) {
+       return quizRepo.findQuizByBookId(bookId);
     }
+
 }

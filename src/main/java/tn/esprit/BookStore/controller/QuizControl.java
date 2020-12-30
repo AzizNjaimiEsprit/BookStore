@@ -1,6 +1,6 @@
 package tn.esprit.BookStore.controller;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +9,8 @@ import tn.esprit.BookStore.model.Response;
 import tn.esprit.BookStore.service.QuizService;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
+import java.util.List;
 
 @RestController
 public class QuizControl {
@@ -41,7 +41,6 @@ public class QuizControl {
             return ResponseEntity.status(404).body(gson.toJson(Response.getInstance("Quiz not found, Please add it or check for updates!",null)));
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
             return ResponseEntity.status(400).body(gson.toJson(Response.getInstance("An error has been occurred!",null)));
         }
     }
@@ -49,7 +48,20 @@ public class QuizControl {
     @GetMapping("/quiz/{book_id}")
     public ResponseEntity<String> getQuizByBookId(@PathVariable("book_id") int bookId){
         try{
-            ArrayList<Quiz> quiz=quizService.findQuizByBook(bookId);
+            List<Quiz> quiz=quizService.findQuizByBook(bookId);
+            Gson gson = new GsonBuilder().registerTypeAdapter(Quiz.class, new JsonSerializer<Quiz>() {
+                @Override
+                public JsonElement serialize(Quiz quiz, Type type, JsonSerializationContext jsonSerializationContext) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("question",quiz.getQuestion().getQuestion());
+                    jsonObject.addProperty("firstAnswer",quiz.getQuestion().getAnswer().getFirstAnswer());
+                    jsonObject.addProperty("secondAnswer",quiz.getQuestion().getAnswer().getSecondAnswer());
+                    jsonObject.addProperty("thirdAnswer",quiz.getQuestion().getAnswer().getThirdAnswer());
+                    jsonObject.addProperty("correctAnswer",quiz.getQuestion().getAnswer().getCorrectAnswer());
+
+                    return jsonObject;
+                }
+            }).create();
             if(quiz.isEmpty()){
                 throw new EntityNotFoundException();
             }
@@ -59,6 +71,7 @@ public class QuizControl {
             return ResponseEntity.status(404).body(gson.toJson(Response.getInstance("Quiz not found, Please add it or check for updates!",null)));
         }
         catch(Exception e){
+            System.out.println(e.getMessage());
             return ResponseEntity.status(400).body(gson.toJson(Response.getInstance("An error has been occurred!",null)));
         }
     }

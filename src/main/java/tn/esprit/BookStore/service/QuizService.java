@@ -1,7 +1,7 @@
 package tn.esprit.BookStore.service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface QuizService<T> {
 
@@ -9,5 +9,6 @@ public interface QuizService<T> {
 
     void removeQuiz(int id) throws EntityNotFoundException;
 
-    ArrayList<T> findQuizByBook(int bookId);
+   List<T> findQuizByBook(int bookId);
+
 }

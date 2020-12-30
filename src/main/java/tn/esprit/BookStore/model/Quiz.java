@@ -13,11 +13,10 @@ public class Quiz implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    @JoinColumn(name="book_id",referencedColumnName = "id", nullable=false)
-    @NotFound(action = NotFoundAction.IGNORE)
+    @OneToOne
+    @JoinColumn(name="book_id",nullable=false)
     private OnlineBook book;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     @JoinColumn(name="question_id", nullable=false)
     private Question question;
 

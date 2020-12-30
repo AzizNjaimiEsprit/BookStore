@@ -3,30 +3,35 @@ package tn.esprit.BookStore.model;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Library implements Serializable{
 
-	@Id
-	@ManyToOne
-	@JoinColumn(name="user_id", nullable=false)
+	@EmbeddedId
+	private LibraryPK id;
+
+	@OneToOne
+	@JoinColumn(name="user_id", insertable = false,updatable = false,nullable=false)
 	private User user;
-	@Id
-	@ManyToOne
-	@JoinColumn(name="book_id", nullable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="book_id",insertable = false,updatable = false,nullable=false)
 	private OnlineBook book;
-	@Column(name="status")
-    private String status="Recently added";
-	@Column(name="page_reached")
-    private int reachedPage=0;
-	@Column(name="quiz_score")
-    private int quizScore=0;
+
+	@Column(name="status", columnDefinition = "varchar(20) default 'Recently added'")
+    private String status;
+	@Column(name="page_reached",columnDefinition = "integer default 0")
+    private int reachedPage;
+	@Column(name="quiz_score",columnDefinition = "integer default 0")
+    private int quizScore;
 
 	public Library() {
 
 	}
 
-	public Library(User user, OnlineBook book, String status, int reachedPage, int quizScore) {
+	public Library(LibraryPK id, User user, OnlineBook book, String status, int reachedPage, int quizScore) {
+		this.id = id;
 		this.user = user;
 		this.book = book;
 		this.status = status;
@@ -34,94 +39,67 @@ public class Library implements Serializable{
 		this.quizScore = quizScore;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Library library = (Library) o;
+		return Objects.equals(id, library.id) &&
+				Objects.equals(user, library.user) &&
+				Objects.equals(book, library.book);
+	}
 
-	public Library(OnlineBook book, String status, int reachedPage, int quizScore) {
-		this.book = book;
-		this.status = status;
-		this.reachedPage = reachedPage;
-		this.quizScore = quizScore;
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, user, book);
+	}
+
+	public LibraryPK getId() {
+		return id;
+	}
+
+	public void setId(LibraryPK id) {
+		this.id = id;
 	}
 
 	public User getUser() {
 		return user;
 	}
 
-
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 
 	public OnlineBook getBook() {
 		return book;
 	}
 
-
 	public void setBook(OnlineBook book) {
 		this.book = book;
 	}
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	public int getReachedPage() {
 		return reachedPage;
 	}
 
-
 	public void setReachedPage(int reachedPage) {
 		this.reachedPage = reachedPage;
 	}
-
 
 	public int getQuizScore() {
 		return quizScore;
 	}
 
-
 	public void setQuizScore(int quizScore) {
 		this.quizScore = quizScore;
-	}
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((book == null) ? 0 : book.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Library other = (Library) obj;
-		if (book == null) {
-			if (other.book != null)
-				return false;
-		} else if (!book.equals(other.book))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
-			return false;
-		return true;
 	}
 
 
@@ -135,4 +113,5 @@ public class Library implements Serializable{
 				", quizScore=" + quizScore +
 				'}';
 	}
+
 }
