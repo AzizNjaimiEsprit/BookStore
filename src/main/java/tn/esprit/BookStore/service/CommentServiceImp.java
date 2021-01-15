@@ -13,22 +13,24 @@ public class CommentServiceImp implements CommentService {
     @Autowired
     CommentRepository commentRepository;
     @Override
-    public void AjouterCommentaire(Comment c) {
+    public void addComment(Comment c) {
         commentRepository.save(c);
     }
 
     @Override
-    public void SupprimerComment(Comment c) {
+    public void deleteComment(Comment c) {
          commentRepository.delete(c);
     }
 
     @Override
-    public void ModifierComment(Comment c) {
+    public void updateComment(Comment c) {
         commentRepository.save(c);
     }
 
-//    @Override
-//    public List<Comment> RecupererListComment(int id ) {
-//        return commentRepository.findAll
-//    }
+    @Override
+    public List<Comment> getListComment(Book b) {
+        return commentRepository.getAllComment(b.getId());
+    }
+
+
 }

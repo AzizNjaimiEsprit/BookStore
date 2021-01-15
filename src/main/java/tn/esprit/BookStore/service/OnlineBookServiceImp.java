@@ -13,32 +13,32 @@ public class OnlineBookServiceImp implements OnlineBookService {
     OnlineBookRepository onlineBookRepository;
 
     @Override
-    public OnlineBook AjouterLivre(OnlineBook b) {
+    public OnlineBook addBook(OnlineBook b) {
         return (OnlineBook) onlineBookRepository.save(b);
     }
 
     @Override
-    public void SupprimerLivre(OnlineBook b) {
+    public void deleteBook(OnlineBook b) {
       onlineBookRepository.delete(b);
     }
 
     @Override
-    public void ModifierLivre(OnlineBook b) {
+    public void updateBook(OnlineBook b) {
        onlineBookRepository.save(b);
     }
 
     @Override
-    public ArrayList<OnlineBook> RecupererListLivre() {
+    public ArrayList<OnlineBook> getBookList() {
         return (ArrayList<OnlineBook>) onlineBookRepository.findAll();
     }
 
     @Override
-    public OnlineBook RecupererLivre(OnlineBook b) {
+    public OnlineBook getBook(OnlineBook b) {
         return (OnlineBook) onlineBookRepository.findById(b.getId()).get();
     }
 
     @Override
-    public OnlineBook RecupererLivreByID(int id) {
+    public OnlineBook getBookByID(int id) {
         return (OnlineBook) onlineBookRepository.findById(id).get();
     }
 }

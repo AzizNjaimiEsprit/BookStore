@@ -12,27 +12,27 @@ public class RateServiceImp implements RateService {
     @Autowired
     RateRepository rateRepository;
     @Override
-    public void AjouterRate(Rate r) {
+    public void addRate(Rate r) {
         rateRepository.save(r);
     }
 
     @Override
-    public void SupprimerRate(Rate r) {
+    public void deleteRate(Rate r) {
         rateRepository.delete(r);
     }
 
     @Override
-    public void ModifierRate(Rate r) {
+    public void updateRate(Rate r) {
         rateRepository.save(r);
     }
 
-/*    @Override
-    public Rate RecupererRate(Rate r) {
-        return null;
+    @Override
+    public Rate getRate(Rate r) {
+        return rateRepository.getrate(r.getB(),r.getU());
     }
 
     @Override
     public double getMoyRates(Book b) {
-        return 0;
-    }*/
+        return rateRepository.getmoyrate(b.getId());
+    }
 }

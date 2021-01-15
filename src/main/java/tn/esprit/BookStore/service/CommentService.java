@@ -6,10 +6,9 @@ import tn.esprit.BookStore.model.Comment;
 import java.util.List;
 
 public interface CommentService {
-    void AjouterCommentaire(Comment c);
-    void SupprimerComment(Comment c);
-    void ModifierComment(Comment c);
-/*
-    List<Comment> RecupererListComment(Book b);
-*/
+    void addComment(Comment c);
+    void deleteComment(Comment c);
+    void updateComment(Comment c);
+
+    List<Comment> getListComment(Book b);
 }

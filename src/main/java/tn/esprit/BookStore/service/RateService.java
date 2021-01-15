@@ -4,9 +4,9 @@ import tn.esprit.BookStore.model.Book;
 import tn.esprit.BookStore.model.Rate;
 
 public interface RateService {
-    void AjouterRate(Rate r);
-    void SupprimerRate(Rate r);
-    void ModifierRate(Rate r);
-/*    Rate RecupererRate(Rate r);
-    double getMoyRates(Book b);*/
+    void addRate(Rate r);
+    void deleteRate(Rate r);
+    void updateRate(Rate r);
+    Rate getRate(Rate r);
+    double getMoyRates(Book b);
 }

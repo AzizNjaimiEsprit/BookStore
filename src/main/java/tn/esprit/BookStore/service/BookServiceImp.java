@@ -14,33 +14,33 @@ public class BookServiceImp implements BookService{
     BookRepository bookRepository;
 
     @Override
-    public Book AjouterLivre(Book b) {
+    public Book addBook(Book b) {
      return (Book) bookRepository.save(b);
 
     }
 
     @Override
-    public void SupprimerLivre(Book b) {
+    public void deleteBook(Book b) {
        bookRepository.delete(b);
     }
 
     @Override
-    public void ModifierLivre(Book b) {
+    public void updateBook(Book b) {
      bookRepository.save(b);
     }
 
     @Override
-    public ArrayList<Book> RecupererListLivre() {
+    public ArrayList<Book> getBookList() {
         return (ArrayList<Book>) bookRepository.findAll();
     }
 
     @Override
-    public Book RecupererLivre(Book b) {
+    public Book getBook(Book b) {
         return (Book) bookRepository.findById(b.getId()).get();
     }
 
     @Override
-    public Book RecupererLivreByID(int id) {
+    public Book getBookByID(int id) {
         return (Book) bookRepository.findById(id).get();
     }
 
