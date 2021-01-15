@@ -1,4 +1,4 @@
-package com.esprit.store.model;
+package tn.esprit.BookStore.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

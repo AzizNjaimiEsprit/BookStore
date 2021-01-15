@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.BookStore.model.User;
-import tn.esprit.BookStore.service.ServiceUser;
+import tn.esprit.BookStore.service.UserService;
 
 @RestController
 @RequestMapping("/Users")
@@ -22,7 +22,7 @@ public class UserController {
 
 
     @Autowired
-    private ServiceUser srvUsr;
+    private UserService srvUsr;
 
 
     /// Sign up user
@@ -92,7 +92,7 @@ public class UserController {
     @ResponseBody
     public int Reset(@RequestParam String email) {
         int x=srvUsr.ResetPassword(email);
-        return ServiceUser.coderest;
+        return UserService.coderest;
     }
     @GetMapping("/ChangePassword")
     @ResponseBody

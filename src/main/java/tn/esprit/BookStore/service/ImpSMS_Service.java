@@ -76,7 +76,7 @@ public class ImpSMS_Service implements Credentials,SMS_Service {
                 .apiKey(nexmo_apiKey)
                 .apiSecret(nexmo_apiSecret)
                 .build();
-        String text = "Hi " + user.getFullName() + "\nSorry but we are not interested in buying your book.";
+        String text = "Hi " + user.getFull_name() + "\nSorry but we are not interested in buying your book.";
         SmsSubmissionResponse responses = client.getSmsClient().submitMessage(new TextMessage(
                 "BookStore",
                 "216" + user.getTelephone(),

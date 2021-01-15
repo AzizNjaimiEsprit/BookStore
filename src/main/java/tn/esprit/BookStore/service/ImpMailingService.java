@@ -56,7 +56,7 @@ public class ImpMailingService implements Credentials,MaillingService {
 
             // Now set the actual message
             String text = "" +
-                    "Hi " + order.getUser().getFullName() + " \n\n" +
+                    "Hi " + order.getUser().getFull_name() + " \n\n" +
                     "Thanks for your purchase from our BookStore \n\n" +
                     "YOUR ORDER INFORMATION: \n\n" +
                     "Order ID: " + order.getId() + "\n\n" +

@@ -32,7 +32,7 @@ import tn.esprit.BookStore.repository.UserRepository;
 import tn.esprit.BookStore.repository.VerificationCodeRepository;
 
 @Service
-public class ServiceUser implements IUserService{
+public class UserService implements IUserService{
 	@Autowired
 	UserRepository UserRepo;
 	@Autowired
@@ -40,7 +40,7 @@ public class ServiceUser implements IUserService{
 	public static int  coderest=0;
 	public static int  idverif=0;
 
-	private static final Logger L=LogManager.getLogger(ServiceUser.class);
+	private static final Logger L=LogManager.getLogger(UserService.class);
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Override
@@ -115,7 +115,7 @@ public class ServiceUser implements IUserService{
 		}
 		int ran = new Random().nextInt((90000-10000)+1)+10000;
 		int tel=UserRepo.sms(email).getTelephone();
-		ServiceUser.coderest=ran;
+		UserService.coderest=ran;
 		sendsms(String.valueOf(tel),ran);
 		return ran;
 	}
@@ -254,7 +254,7 @@ public class ServiceUser implements IUserService{
 		if(t==null) {
 			return "User not found";
 		}
-		if(ServiceUser.coderest==code) {
+		if(UserService.coderest==code) {
 			t.setPassword(bCryptPasswordEncoder.encode(password));
 			UserRepo.save(t);
 			return "Password updated successfully !";
