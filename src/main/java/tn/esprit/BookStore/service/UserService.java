@@ -41,8 +41,8 @@ public class UserService implements IUserService{
 	public static int  idverif=0;
 
 	private static final Logger L=LogManager.getLogger(UserService.class);
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	@Override
 	public User Authority(String login, String password)  {
 		User logged= UserRepo.Auth(login);
@@ -60,10 +60,8 @@ public class UserService implements IUserService{
 		if(UserRepo.Existmail(us.getEmail(),us.getLogin())==false) {
 			String encodedPassword = bCryptPasswordEncoder.encode(us.getPassword());
 			String verifCode = bCryptPasswordEncoder.encode(us.getFull_name());
-
 			us.setPassword(encodedPassword);
 			User x=UserRepo.save(us);
-
 			mailling(us.getEmail(),"Your verification code is : "+verifCode );
 			return "User added successfully !";
 		}

@@ -6,15 +6,15 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name="t_online_book")
+@Table(name="online_book")
 public class OnlineBook implements Serializable {
 
 	@Id
-	@Column(name = "book_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToOne
 	private Book book;
-	private String url ;
+	private String url;
 
 	public OnlineBook() {
 

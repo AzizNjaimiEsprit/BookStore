@@ -11,6 +11,8 @@ public interface BookService {
     ArrayList<Book> RecupererListLivre();
     Book RecupererLivre(Book b);
     Book RecupererLivreByID(int id);
+    int getQuantity(int id);
+    void setQuantity(int id,int newQ);
 
 
 }

@@ -22,7 +22,7 @@ public class ImpOrderService implements OrderService {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
-    BookRepository bookRepository;
+    BookService bookService;
     @Autowired
     OrderItemService orderItemService;
 
@@ -32,15 +32,15 @@ public class ImpOrderService implements OrderService {
 
         //Checking book disponibility
         for (OrderItem item : order.getItems()) {
-            if (item.getQuantity() > bookRepository.getQuantity(item.getBook().getId()))
+            if (item.getQuantity() > bookService.getQuantity(item.getBook().getId()))
                 return null;
         }
         for (OrderItem item : order.getItems()) {
-            if (item.getQuantity() == bookRepository.getQuantity(item.getBook().getId())) {
-                //Send Email Service
+            if (item.getQuantity() == bookService.getQuantity(item.getBook().getId())) {
+                mailingService.sendReptureStockEmail(item.getBook());
             }
         }
-        //Che
+
         Customer c = paymentService.getCustomer(order.getUser().getEmail());
         String pay_id = paymentService.chargeCustomer(c.getId(), (int) order.getTotalPrice() * 100);
         if (pay_id == null) {

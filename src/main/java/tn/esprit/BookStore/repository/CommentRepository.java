@@ -10,7 +10,7 @@ import tn.esprit.BookStore.model.Comment;
 import java.util.List;
 
 @Repository
-public interface CommentRepository extends JpaRepository {
+public interface CommentRepository extends JpaRepository<Comment,Integer> {
 
 /*    @Query("SELECT c.* , full_name from t_comment c join t_user U on U.id = c.user_id WHERE id_book=:id")
     List<Comment> getAllComment(@Param("id") int id);*/

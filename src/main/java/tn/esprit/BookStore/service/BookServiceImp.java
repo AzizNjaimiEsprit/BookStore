@@ -43,4 +43,14 @@ public class BookServiceImp implements BookService{
     public Book RecupererLivreByID(int id) {
         return (Book) bookRepository.findById(id).get();
     }
+
+    @Override
+    public int getQuantity(int id) {
+        return bookRepository.getQuantity(id);
+    }
+
+    @Override
+    public void setQuantity(int id, int newQ) {
+        bookRepository.setQuantity(id, newQ);
+    }
 }

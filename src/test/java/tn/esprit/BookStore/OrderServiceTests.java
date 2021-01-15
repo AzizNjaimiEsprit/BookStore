@@ -41,8 +41,8 @@ class OrderServiceTests {
 		User user = new User();
 		user.setId(3);
 		user.setEmail("a52650101@gmail.com");
-		user.setFullName("Med Aziz Njaimi");
-		user.setTelephone("52650101");
+		user.setFull_name("Med Aziz Njaimi");
+		user.setTelephone(52650101);
 		Order order = new Order(0,user,list,120,null,"2020-15-02","kbba",2503,"52650101","Non Traite");
 		System.out.println(orderService.add(order));
 

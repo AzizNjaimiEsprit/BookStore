@@ -1,8 +1,9 @@
-package com.esprit.store.repository;
+package tn.esprit.BookStore.model;
 
-import com.esprit.store.model.WishList;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import tn.esprit.BookStore.model.WishList;
 
 @Repository
 public interface WishListRepository extends CrudRepository<WishList, Long> {
