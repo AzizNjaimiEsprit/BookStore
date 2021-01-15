@@ -1,13 +1,11 @@
 package tn.esprit.BookStore.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Njaimi Med Aziz
@@ -19,19 +17,19 @@ import java.util.Objects;
 @EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItem implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
     @ManyToOne
-    @JoinColumn(name="order_id", nullable=false)
+    @JoinColumn(name = "order_id", nullable = false)
     @JsonIgnore
     private Order order;
     @Column
     private int quantity;
     @ManyToOne
-    @JoinColumn(name="book_id", nullable=false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
     @Override

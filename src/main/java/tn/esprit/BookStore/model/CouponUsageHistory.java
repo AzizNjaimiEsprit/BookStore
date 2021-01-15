@@ -19,12 +19,13 @@ import java.util.Objects;
 @Table(name = "coupon_usage_history")
 public class CouponUsageHistory implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name="coupon_code", nullable=false)
+    @JoinColumn(name = "coupon_code", nullable = false)
     private Coupon coupon;
     @ManyToOne
-    @JoinColumn(name="order_id", nullable=false)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
     @Column(name = "usage_type")
     private String usageType;
@@ -33,10 +34,25 @@ public class CouponUsageHistory implements Serializable {
     @Override
     public String toString() {
         return "CouponUsageHistory{" +
-                "id="+id+
+                "id=" + id +
                 "coupon=" + coupon.getCode() +
                 ", order=" + order.getId() +
                 ", usageType='" + usageType + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CouponUsageHistory that = (CouponUsageHistory) o;
+        return Objects.equals(coupon, that.coupon) &&
+                Objects.equals(order, that.order) &&
+                Objects.equals(usageType, that.usageType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coupon, order, usageType);
     }
 }

@@ -1,8 +1,9 @@
 package tn.esprit.BookStore.model;
 
 import lombok.*;
+
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -16,15 +17,15 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-public class Order {
+public class Order implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @OneToMany( targetEntity=OrderItem.class, mappedBy="order" )
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
     private List<OrderItem> items;
     @Column
     private float totalPrice;
@@ -45,12 +46,14 @@ public class Order {
         this.id = id;
     }
 
+
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", userId=" + user.getId() +
-                ", items:`\n" + OrderItem.afficherTab(items) +
+                ", items:`\n" + items +
                 ", totalPrice=" + totalPrice +
                 ", paymentID='" + paymentID + '\'' +
                 ", orderDate=" + orderDate +
