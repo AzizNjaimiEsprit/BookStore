@@ -41,4 +41,13 @@ public class OnlineBookServiceImp implements OnlineBookService {
     public OnlineBook getBookByID(int id) {
         return (OnlineBook) onlineBookRepository.findById(id).get();
     }
+    @Override
+    public int getQuantity(int id) {
+        return onlineBookRepository.getQuantity(id);
+    }
+
+    @Override
+    public void setOnlineQuantity(int id, int newQ) {
+        onlineBookRepository.setOnlineQuantity(id, newQ);
+    }
 }

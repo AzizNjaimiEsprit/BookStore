@@ -12,4 +12,6 @@ public interface OnlineBookService {
     ArrayList<OnlineBook> getBookList();
     OnlineBook getBook(OnlineBook b);
     OnlineBook getBookByID(int id);
+    int getQuantity(int id);
+    void setOnlineQuantity(int id,int newQ);
 }
