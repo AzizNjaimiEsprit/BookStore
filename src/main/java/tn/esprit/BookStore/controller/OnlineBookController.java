@@ -33,18 +33,13 @@ public class OnlineBookController {
         return onlineBookServiceImp.getBookList();
     }
 
-    @GetMapping("/getOnlineBook")
-    public OnlineBook getBook(@RequestBody OnlineBook Book) {
-        return onlineBookServiceImp.getBook(Book);
-    }
-
-    @GetMapping("/getOnlineBookbyId")
-    public OnlineBook getOnlineBookbyId(@RequestBody int id) {
+    @GetMapping("/getOnlineBook/{id}")
+    public OnlineBook getOnlineBookbyId(@PathVariable int id) {
         return onlineBookServiceImp.getBookByID(id);
     }
 
-    @GetMapping("/getOnlineQuantity")
-    public int getOnlineQuantity(@RequestBody int id) {
+    @GetMapping("/getOnlineQuantity/{id}")
+    public int getOnlineQuantity(@PathVariable int id) {
         return onlineBookServiceImp.getQuantity(id);
     }
 

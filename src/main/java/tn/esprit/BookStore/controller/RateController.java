@@ -28,11 +28,6 @@ public class RateController {
     }
 
 
-    @GetMapping("/getListRate")
-    public Rate getListRate(@RequestBody Rate r) {
-        return rateServiceImp.getRate(r);
-    }
-
     @GetMapping("/getMoyRate")
     public double getMoyRate(@RequestBody Book b) {
         return rateServiceImp.getMoyRates(b);

@@ -2,6 +2,7 @@ package tn.esprit.BookStore.service;
 
 import tn.esprit.BookStore.model.Book;
 import tn.esprit.BookStore.model.Comment;
+import tn.esprit.BookStore.model.User;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface CommentService {
     void updateComment(Comment c);
 
     List<Comment> getListComment(Book b);
+    User getTopFan();
 }

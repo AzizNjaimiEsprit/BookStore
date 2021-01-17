@@ -34,18 +34,14 @@ public class BookController {
         return bookServiceImp.getBookList();
     }
 
-    @GetMapping("/getBook")
-    public Book getBook(@RequestBody Book Book) {
-        return bookServiceImp.getBook(Book);
-    }
 
-    @GetMapping("/getBookbyId")
-    public Book getBookbyId(@RequestBody int id) {
+    @GetMapping("/getBook/{id}")
+    public Book getBookbyId(@PathVariable int id) {
         return bookServiceImp.getBookByID(id);
     }
 
-    @GetMapping("/getQuantity")
-    public int getQuantity(@RequestBody int id) {
+    @GetMapping("/getQuantity/{id}")
+    public int getQuantity(@PathVariable int id) {
         return bookServiceImp.getQuantity(id);
     }
 
