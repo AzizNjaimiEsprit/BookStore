@@ -9,6 +9,6 @@ public interface QuizService<T> {
 
     void removeQuiz(int id) throws EntityNotFoundException;
 
-   List<T> findQuizByBook(int bookId);
+    List<T> findQuizByBook(int bookId);
 
 }

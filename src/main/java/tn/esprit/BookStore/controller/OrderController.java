@@ -94,21 +94,22 @@ public class OrderController {
     }
 
     @GetMapping("/getStat/{filter}")
-    ResponseEntity getStat (@PathVariable String filter){
-        if (filter.equals("month")){
-            return Response.getResponseEntity("true",orderService.getStatsPerMonth());
+    ResponseEntity getStat(@PathVariable String filter) {
+        if (filter.equals("month")) {
+            return Response.getResponseEntity("true", orderService.getStatsPerMonth());
         }
-        if (filter.equals("quarter")){
-            return Response.getResponseEntity("true",orderService.getStatsPerQuarter());
+        if (filter.equals("quarter")) {
+            return Response.getResponseEntity("true", orderService.getStatsPerQuarter());
         }
-        if (filter.equals("gov")){
-            return Response.getResponseEntity("true",orderService.getStatsPerGov());
+        if (filter.equals("gov")) {
+            return Response.getResponseEntity("true", orderService.getStatsPerGov());
         }
         return Response.getResponseEntity("false");
     }
+
     @GetMapping("/getBestCustomer")
-    ResponseEntity getBestCustomer(){
-        return Response.getResponseEntity("true",orderService.getBestCustomer());
+    ResponseEntity getBestCustomer() {
+        return Response.getResponseEntity("true", orderService.getBestCustomer());
     }
 
 }

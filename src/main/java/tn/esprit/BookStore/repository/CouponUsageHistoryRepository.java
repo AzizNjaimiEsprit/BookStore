@@ -12,7 +12,7 @@ public interface CouponUsageHistoryRepository extends JpaRepository<CouponUsageH
     @Query(value = "Select * from coupon_usage_history where coupon_code= :code", nativeQuery = true)
     List<CouponUsageHistory> getHistoryForCoupon(@Param("code") String code);
 
-    @Query(value = "select * from coupon_usage_history where coupon_code= :code AND order_id= :oid AND usage_type= :ut",nativeQuery = true)
-    CouponUsageHistory checkIfExist(@Param("code") String code,@Param("oid") int oid,@Param("ut") String ut);
+    @Query(value = "select * from coupon_usage_history where coupon_code= :code AND order_id= :oid AND usage_type= :ut", nativeQuery = true)
+    CouponUsageHistory checkIfExist(@Param("code") String code, @Param("oid") int oid, @Param("ut") String ut);
 
 }

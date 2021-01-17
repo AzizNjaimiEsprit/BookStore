@@ -11,6 +11,7 @@ import tn.esprit.BookStore.repository.RateRepository;
 public class RateServiceImp implements RateService {
     @Autowired
     RateRepository rateRepository;
+
     @Override
     public void addRate(Rate r) {
         rateRepository.save(r);
@@ -28,7 +29,7 @@ public class RateServiceImp implements RateService {
 
     @Override
     public Rate getRate(Rate r) {
-        return rateRepository.getrate(r.getB(),r.getU());
+        return rateRepository.getrate(r.getB(), r.getU());
     }
 
     @Override

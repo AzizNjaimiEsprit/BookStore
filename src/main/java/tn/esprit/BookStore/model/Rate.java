@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name ="rate")
+@Table(name = "rate")
 public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +64,7 @@ public class Rate {
         if (this == o) {
             return true;
         } else if (o != null && this.getClass() == o.getClass()) {
-            Rate rate1 = (Rate)o;
+            Rate rate1 = (Rate) o;
             return this.getId() == rate1.getId();
         } else {
             return false;
@@ -72,6 +72,6 @@ public class Rate {
     }
 
     public int hashCode() {
-        return Objects.hash(new Object[]{this.getId(), this.getRate(), this.book_id, this.user_id});
+        return Objects.hash(this.getId(), this.getRate(), this.book_id, this.user_id);
     }
 }

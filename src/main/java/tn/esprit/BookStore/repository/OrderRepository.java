@@ -24,22 +24,22 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     void updateStatus(@Param("status") String status, @Param("id") Integer id);
 
     //Stats
-    @Query(value = "select CONCAT(z.governorate,':',SUM(o.total_price)) as sum\n" +
-            "from orders o, zip_codestn z\n" +
-            "where z.code like  CONCAT(SUBSTR(o.zip_code, 1, 2),'__')\n" +
+    @Query(value = "select CONCAT(z.governorate,':',SUM(o.total_price)) as sum " +
+            "from orders o, zip_codestn z " +
+            "where z.code like  CONCAT(SUBSTR(o.zip_code, 1, 2),'__')" +
             "GROUP BY z.governorate",nativeQuery = true)
-    ArrayList<String> getInputsByGovernorate ();
+    ArrayList<String> getInputsByGovernorate();
 
     @Query(value = "select QUARTER(order_date),SUM(total_price)" +
-            " as sum from orders group by QUARTER(order_date)",nativeQuery = true)
+            " as sum from orders group by QUARTER(order_date)", nativeQuery = true)
     List<Object[]> getInputsByQuarter();
 
     @Query(value = "select MONTH(order_date),SUM(total_price)" +
-            " as sum from orders group by MONTH(order_date)",nativeQuery = true)
-    List<Object[]> getInputsByMonth ();
+            " as sum from orders group by MONTH(order_date)", nativeQuery = true)
+    List<Object[]> getInputsByMonth();
 
-    @Query(value = "select MAX(amount) ,full_name from (select SUM(total_price)  amount , user_id , full_name " +
+    @Query(value = "select MAX(amount) ,full_name,user_id from (select SUM(total_price)  amount , user_id , full_name " +
             "from orders JOIN user u on orders.user_id = u.id " +
-            "group by user_id) tab",nativeQuery = true)
+            "group by user_id order by amount DESC) tab", nativeQuery = true)
     List<Object[]> getBestCustomer();
 }

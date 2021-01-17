@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @Table
-public class ZipCodesTN implements Serializable{
+public class ZipCodesTN implements Serializable {
     @Id
     private String governorate;
 

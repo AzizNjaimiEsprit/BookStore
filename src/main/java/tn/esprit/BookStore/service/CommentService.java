@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface CommentService {
     void addComment(Comment c);
+
     void deleteComment(Comment c);
+
     void updateComment(Comment c);
+
     List<Comment> getListComment(Book b);
 }

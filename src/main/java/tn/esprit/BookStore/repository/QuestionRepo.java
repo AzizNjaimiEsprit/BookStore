@@ -8,10 +8,9 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.BookStore.model.Question;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 
 @Repository
-public interface QuestionRepo extends JpaRepository<Question,Integer> {
+public interface QuestionRepo extends JpaRepository<Question, Integer> {
 
     @Modifying
     @Transactional
@@ -19,5 +18,5 @@ public interface QuestionRepo extends JpaRepository<Question,Integer> {
     void deleteQuiz(@Param("id") int id);
 
     @Query("select answer.id from Question where id= :id")
-    int  getAnswerById(@Param("id") int id);
+    int getAnswerById(@Param("id") int id);
 }

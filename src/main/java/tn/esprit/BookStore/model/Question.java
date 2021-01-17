@@ -1,7 +1,5 @@
 package tn.esprit.BookStore.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,7 +13,7 @@ public class Question implements Serializable {
     private int id;
 
     @OneToOne
-    @JoinColumn(name="answer_id", nullable=false,unique = true)
+    @JoinColumn(name = "answer_id", nullable = false, unique = true)
     private Answer answer;
     @Column
     private String question;

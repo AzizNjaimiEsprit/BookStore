@@ -19,8 +19,10 @@ public class ImpOrderItemService implements OrderItemService {
     @Transactional
     @Override
     public void add(OrderItem orderItem) {
-        Book book = bookService.getBook(orderItem.getBook());
-        book.setQuantity(book.getQuantity()- orderItem.getQuantity());
+        System.out.println(orderItem.getBook().getId());
+        System.out.println(orderItem.getBook().getTitle());
+        Book book = bookService.getBookByID(orderItem.getBook().getId());
+        book.setQuantity(book.getQuantity() - orderItem.getQuantity());
         bookService.updateBook(book);
         repository.save(orderItem);
     }
@@ -30,8 +32,8 @@ public class ImpOrderItemService implements OrderItemService {
     public void update(OrderItem orderItem) {
         OrderItem oi = repository.getOne(orderItem.getId());
         int diff = oi.getQuantity() - orderItem.getQuantity();
-        Book book = bookService.getBook(orderItem.getBook());
-        book.setQuantity(book.getQuantity()+diff);
+        Book book = bookService.getBookByID(orderItem.getBook().getId());
+        book.setQuantity(book.getQuantity() + diff);
         bookService.updateBook(book);
         repository.save(orderItem);
     }

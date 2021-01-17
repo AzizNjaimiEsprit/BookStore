@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public interface QuizRepo extends JpaRepository<Quiz,Integer> {
+public interface QuizRepo extends JpaRepository<Quiz, Integer> {
 
     @Modifying
     @Transactional(rollbackOn = EntityNotFoundException.class)
@@ -23,7 +23,7 @@ public interface QuizRepo extends JpaRepository<Quiz,Integer> {
     @Query("select question.id from Quiz where book.id = :book_id ")
     ArrayList<Integer> getQuestionById(@Param("book_id") int bookId);
 
-    @Query(value = "select * from Quiz q join online_book ob on ob.book_id = q.book_id where ob.book_id=:book_id",nativeQuery = true)
-    List<Quiz> findQuizByBookId (@Param("book_id") int bookId);
+    @Query(value = "select * from Quiz q join online_book ob on ob.book_id = q.book_id where ob.book_id=:book_id", nativeQuery = true)
+    List<Quiz> findQuizByBookId(@Param("book_id") int bookId);
 
 }

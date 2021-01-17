@@ -12,7 +12,7 @@ public class BasketPK implements Serializable {
     @Column(name = "user_id", nullable = false)
     private int user_id;
 
-    public BasketPK(int book_id,int user_id) {
+    public BasketPK(int book_id, int user_id) {
         this.book_id = book_id;
         this.user_id = user_id;
     }

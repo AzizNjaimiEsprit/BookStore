@@ -1,8 +1,5 @@
 package tn.esprit.BookStore.model;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,10 +11,10 @@ public class Quiz implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne
-    @JoinColumn(name="book_id",nullable=false)
+    @JoinColumn(name = "book_id", nullable = false)
     private OnlineBook book;
     @OneToOne
-    @JoinColumn(name="question_id", nullable=false)
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
     public Quiz() {

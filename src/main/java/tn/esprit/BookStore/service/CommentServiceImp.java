@@ -12,6 +12,7 @@ import java.util.List;
 public class CommentServiceImp implements CommentService {
     @Autowired
     CommentRepository commentRepository;
+
     @Override
     public void addComment(Comment c) {
         commentRepository.save(c);
@@ -19,7 +20,7 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public void deleteComment(Comment c) {
-         commentRepository.delete(c);
+        commentRepository.delete(c);
     }
 
     @Override

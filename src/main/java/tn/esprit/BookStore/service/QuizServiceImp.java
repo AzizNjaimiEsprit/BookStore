@@ -8,7 +8,6 @@ import tn.esprit.BookStore.repository.QuestionRepo;
 import tn.esprit.BookStore.repository.QuizRepo;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,27 +31,27 @@ public class QuizServiceImp implements QuizService<Quiz> {
 
     @Override
     public void removeQuiz(int id) throws EntityNotFoundException {
-        ArrayList<Integer> questionsId=quizRepo.getQuestionById(id);
-        if(questionsId.isEmpty()){
+        ArrayList<Integer> questionsId = quizRepo.getQuestionById(id);
+        if (questionsId.isEmpty()) {
             throw new EntityNotFoundException();
         }
         quizRepo.deleteQuiz(id);
-        ArrayList<Integer> answersId=new ArrayList<>();
-        for(Integer i:questionsId){
+        ArrayList<Integer> answersId = new ArrayList<>();
+        for (Integer i : questionsId) {
             answersId.add(questionRepo.getAnswerById(i));
             questionRepo.deleteQuiz(i);
         }
-        if(answersId.isEmpty()){
+        if (answersId.isEmpty()) {
             throw new EntityNotFoundException();
         }
-        for(Integer i:answersId) {
+        for (Integer i : answersId) {
             answerRepo.deleteAnswer(i);
         }
     }
 
     @Override
     public List<Quiz> findQuizByBook(int bookId) {
-       return quizRepo.findQuizByBookId(bookId);
+        return quizRepo.findQuizByBookId(bookId);
     }
 
 }

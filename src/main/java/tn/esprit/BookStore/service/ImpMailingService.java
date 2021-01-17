@@ -1,11 +1,14 @@
 package tn.esprit.BookStore.service;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tn.esprit.BookStore.env.Credentials;
 import tn.esprit.BookStore.model.Book;
 import tn.esprit.BookStore.model.Order;
 import tn.esprit.BookStore.model.OrderItem;
+import tn.esprit.BookStore.model.User;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -16,9 +19,10 @@ import java.util.Properties;
  * @author Njaimi Med Aziz
  */
 @Service
-public class ImpMailingService implements Credentials,MaillingService {
+public class ImpMailingService implements Credentials, MaillingService {
     Properties props;
     Session session;
+    private static final Logger log = LoggerFactory.getLogger(ImpMailingService.class);
 
     public ImpMailingService() {
         props = new Properties();
@@ -40,21 +44,11 @@ public class ImpMailingService implements Credentials,MaillingService {
 
     @Override
     public void sendReceiptEmail(Order order) {
-
         try {
-            // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(order.getUser().getEmail()));
-
-            // Set Subject: header field
             message.setSubject("Your Bookstore Order Receipt" + order.getId());
-
-            // Now set the actual message
             String text = "" +
                     "Hi " + order.getUser().getFull_name() + " \n\n" +
                     "Thanks for your purchase from our BookStore \n\n" +
@@ -66,16 +60,35 @@ public class ImpMailingService implements Credentials,MaillingService {
             for (OrderItem i : order.getItems()) {
                 text += i.getBook().getTitle() + "\t Quantity : " + i.getQuantity() + "\n\n";
             }
-
             text += "Total Price : " + order.getTotalPrice() + "Dt\n\n\n\n" +
                     "Remember that you can always check on you order status on our website www.bookstore.com.tn";
-
             message.setText(text);
-
             System.out.println("sending receipt mail...");
-            // Send message
             Transport.send(message);
-            System.out.println("Receipt mail Sent message successfully....");
+            //System.out.println("Receipt mail Sent message successfully....");
+            log.info("Receipt mail Sent message successfully....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendGiftEmail(User user, double amount) {
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
+            message.setSubject("Best Customer Gift");
+            String text = "" +
+                    "Hi " + user.getFull_name() + " \n\n" +
+                    "You are chosen as Best Customer of the week \n\n" +
+                    "As a reward to your fidelity : \n\n" +
+                    "A Gift has been sent to your fidelity wallet \n\n" +
+                    "Amount : " + amount + "\n\n";
+            message.setText(text);
+            System.out.println("sending Best Customer Gift mail...");
+            Transport.send(message);
+            log.info("Best Customer Gift mail Sent successfully....");
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
@@ -92,7 +105,8 @@ public class ImpMailingService implements Credentials,MaillingService {
             System.out.println("Sending out of stock mail ...");
 
             Transport.send(message);
-            System.out.println("Out of stock mail Sent message successfully....");
+            log.info("Out of stock mail Sent message successfully....");
+
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
@@ -101,19 +115,14 @@ public class ImpMailingService implements Credentials,MaillingService {
     @Override
     public void sendConfirmationEmail(String to, String msg) {
         try {
-            // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-            // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            // Set Subject: header field
             message.setSubject("Confirmations");
             message.setText(msg);
             System.out.println("sending...");
-            // Send message
             Transport.send(message);
-            System.out.println("Sent message successfully....");
+            log.info("Sent message successfully....");
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }

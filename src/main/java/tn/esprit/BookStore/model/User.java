@@ -1,17 +1,17 @@
 package tn.esprit.BookStore.model;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Objects;
+
 @Entity
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String full_name;
     private String email;
@@ -21,7 +21,6 @@ public class User implements Serializable {
     private int role;
     private String address;
     private int zipCode;
-
 
 
     public User(String full_name, String email, int telephone, String login, String password, int role, String address,
@@ -57,7 +56,7 @@ public class User implements Serializable {
 
     }
 
-    public User( String full_name, String email, int telephone, String login, String password, int role) {
+    public User(String full_name, String email, int telephone, String login, String password, int role) {
 
         this.full_name = full_name;
         this.email = email;

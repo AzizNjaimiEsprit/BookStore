@@ -2,7 +2,6 @@ package tn.esprit.BookStore.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,17 +11,17 @@ public class Answer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
-    @Column(name="first_answer")
+    @Column(name = "first_answer")
     private String firstAnswer;
-    @Column(name="second_answer")
+    @Column(name = "second_answer")
     private String secondAnswer;
-    @Column(name="third_answer")
+    @Column(name = "third_answer")
     private String thirdAnswer;
-    @Column(name="correct_answer")
+    @Column(name = "correct_answer")
     private String correctAnswer;
 
-    public Answer(int id,String firstAnswer, String secondAnswer, String thirdAnswer, String correctAnswer) {
-        this.id=id;
+    public Answer(int id, String firstAnswer, String secondAnswer, String thirdAnswer, String correctAnswer) {
+        this.id = id;
         this.firstAnswer = firstAnswer;
         this.secondAnswer = secondAnswer;
         this.thirdAnswer = thirdAnswer;

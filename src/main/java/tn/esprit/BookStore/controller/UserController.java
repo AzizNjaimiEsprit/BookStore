@@ -1,20 +1,11 @@
 package tn.esprit.BookStore.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import tn.esprit.BookStore.model.User;
 import tn.esprit.BookStore.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/Users")
@@ -28,14 +19,15 @@ public class UserController {
     /// Sign up user
     @PostMapping("/Signup")
     @ResponseBody
-    public String Adduser( User us) {
+    public String Adduser(User us) {
         return srvUsr.Signup(us);
 
     }
+
     /// Sign up user
     @PostMapping("/SignupClient")
     @ResponseBody
-    public String AdduserClient( User us) {
+    public String AdduserClient(User us) {
         return srvUsr.SignupClient(us);
 
     }
@@ -43,7 +35,7 @@ public class UserController {
     // Get All
     @GetMapping
     @ResponseBody
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
 
         List<User> list = srvUsr.GetAllUsers();
         return list;
@@ -52,7 +44,7 @@ public class UserController {
     // Get All Admin
     @GetMapping("Admins")
     @ResponseBody
-    public List<User> getAllAdmin(){
+    public List<User> getAllAdmin() {
 
         List<User> list = srvUsr.GetAllAdmin();
         if (list != null && list.isEmpty()) {
@@ -61,6 +53,7 @@ public class UserController {
         }
         return list;
     }
+
     // Login
     @PostMapping("/au")
     @ResponseBody
@@ -72,44 +65,51 @@ public class UserController {
     //update
     @PutMapping("/modify")
     @ResponseBody
-    public User modifyUser( User user) {
+    public User modifyUser(User user) {
         return srvUsr.Update(user);
     }
+
     @DeleteMapping("/suppression/{id}")
     @ResponseBody
-    public String SupprimerUser( @PathVariable("id") long id) {
+    public String SupprimerUser(@PathVariable("id") long id) {
         srvUsr.Delete(id);
         return "User Deleted successfully !";
     }
+
     //Get user infos
     @GetMapping("/informationUser/{id}")
     @ResponseBody
-    public User userInfo( @PathVariable("id") long id) {
+    public User userInfo(@PathVariable("id") long id) {
         return srvUsr.GetUser(id);
 
     }
+
     @GetMapping("/resetPassword")
     @ResponseBody
     public int Reset(@RequestParam String email) {
-        int x=srvUsr.ResetPassword(email);
+        int x = srvUsr.ResetPassword(email);
         return UserService.coderest;
     }
+
     @GetMapping("/ChangePassword")
     @ResponseBody
-    public String Change(@RequestParam int number,@RequestParam String password,@RequestParam long id) {
-        String x=srvUsr.UpdateRestPassword(number,password,id);
+    public String Change(@RequestParam int number, @RequestParam String password, @RequestParam long id) {
+        String x = srvUsr.UpdateRestPassword(number, password, id);
         return x;
     }
+
     @GetMapping("/VerifyAccount")
     @ResponseBody
-    public String verify( User u, @RequestParam String Code) {
+    public String verify(User u, @RequestParam String Code) {
         return srvUsr.VerifyMyaccount(u, Code);
     }
+
     @GetMapping("/isVerified")
     @ResponseBody
-    public boolean isverify( User u) {
-        return srvUsr.isVerified(u.getLogin(),u.getPassword());
+    public boolean isverify(User u) {
+        return srvUsr.isVerified(u.getLogin(), u.getPassword());
     }
+
     @RequestMapping("/hello")
     public String hello() {
         return "helloworld";

@@ -1,7 +1,7 @@
 package tn.esprit.BookStore.service;
 
-import org.springframework.http.ResponseEntity;
 import tn.esprit.BookStore.model.Order;
+import tn.esprit.BookStore.model.User;
 
 import java.util.List;
 import java.util.Map;
@@ -21,13 +21,13 @@ public interface OrderService {
 
     List<Order> getUserOrders(int userId);
 
-    Map<String,Float> getStatsPerGov();
+    Map<String, Float> getStatsPerGov();
 
-    Map<Integer,Double> getStatsPerQuarter();
+    Map<Integer, Double> getStatsPerQuarter();
 
-    Map<Integer,Double> getStatsPerMonth();
+    Map<Integer, Double> getStatsPerMonth();
 
-    Map<String,Double> getBestCustomer();
+    Map<User, Double> getBestCustomer();
 
 
 }

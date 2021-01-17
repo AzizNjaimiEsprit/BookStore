@@ -12,13 +12,13 @@ public class WishListPK implements Serializable {
     @Column(name = "user_id", nullable = false)
     private int user_id;
 
-    public WishListPK(int book_id,int user_id) {
+    public WishListPK(int book_id, int user_id) {
         this.book_id = book_id;
         this.user_id = user_id;
     }
+
     public WishListPK() {
     }
-
 
 
     public int getBook_id() {

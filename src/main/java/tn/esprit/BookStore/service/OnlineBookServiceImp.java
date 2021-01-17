@@ -14,17 +14,17 @@ public class OnlineBookServiceImp implements OnlineBookService {
 
     @Override
     public OnlineBook addBook(OnlineBook b) {
-        return (OnlineBook) onlineBookRepository.save(b);
+        return onlineBookRepository.save(b);
     }
 
     @Override
     public void deleteBook(OnlineBook b) {
-      onlineBookRepository.delete(b);
+        onlineBookRepository.delete(b);
     }
 
     @Override
     public void updateBook(OnlineBook b) {
-       onlineBookRepository.save(b);
+        onlineBookRepository.save(b);
     }
 
     @Override
@@ -34,13 +34,14 @@ public class OnlineBookServiceImp implements OnlineBookService {
 
     @Override
     public OnlineBook getBook(OnlineBook b) {
-        return (OnlineBook) onlineBookRepository.findById(b.getId()).get();
+        return onlineBookRepository.findById(b.getId()).get();
     }
 
     @Override
     public OnlineBook getBookByID(int id) {
-        return (OnlineBook) onlineBookRepository.findById(id).get();
+        return onlineBookRepository.findById(id).get();
     }
+
     @Override
     public int getQuantity(int id) {
         return onlineBookRepository.getQuantity(id);

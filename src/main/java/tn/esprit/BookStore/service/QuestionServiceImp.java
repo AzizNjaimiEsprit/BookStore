@@ -14,17 +14,16 @@ public class QuestionServiceImp implements QuestionService<Question> {
     @Autowired
     QuestionRepo questionRepo;
 
-    public Question save(Question question){
+    public Question save(Question question) {
         return questionRepo.save(question);
     }
 
     @Override
     public Optional<Question> findQuestionById(int id) throws EntityNotFoundException {
-        Optional<Question> question=questionRepo.findById(id);
-        if(question.isPresent()){
+        Optional<Question> question = questionRepo.findById(id);
+        if (question.isPresent()) {
             return question;
-        }
-        else{
+        } else {
             throw new EntityNotFoundException();
         }
     }

@@ -10,7 +10,7 @@ import tn.esprit.BookStore.model.Answer;
 import javax.transaction.Transactional;
 
 @Repository
-public interface AnswerRepo extends JpaRepository<Answer,Integer> {
+public interface AnswerRepo extends JpaRepository<Answer, Integer> {
 
     @Modifying
     @Transactional

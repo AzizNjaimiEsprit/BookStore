@@ -68,7 +68,7 @@ public class Comment {
         return "Comment{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", b=" + book_id+
+                ", b=" + book_id +
                 ", u=" + user_id +
                 '}';
     }

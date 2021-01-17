@@ -13,25 +13,29 @@ public class RateController {
     RateServiceImp rateServiceImp;
 
     @PostMapping("/addRate")
-    public void addRate(@RequestBody Rate r){
+    public void addRate(@RequestBody Rate r) {
         rateServiceImp.addRate(r);
     }
+
     @PostMapping("/deleteRate")
-    public void deleteRate(@RequestBody Rate r){
+    public void deleteRate(@RequestBody Rate r) {
         rateServiceImp.deleteRate(r);
     }
+
     @PostMapping("/updateRate")
-    public void updateRate(@RequestBody Rate r){
+    public void updateRate(@RequestBody Rate r) {
         rateServiceImp.updateRate(r);
     }
 
 
     @GetMapping("/getListRate")
-    public Rate getListRate(@RequestBody Rate r){
-        return rateServiceImp.getRate(r); }
+    public Rate getListRate(@RequestBody Rate r) {
+        return rateServiceImp.getRate(r);
+    }
 
     @GetMapping("/getMoyRate")
-    public double getMoyRate(@RequestBody Book b){
-        return rateServiceImp.getMoyRates(b); }
+    public double getMoyRate(@RequestBody Book b) {
+        return rateServiceImp.getMoyRates(b);
+    }
 
 }

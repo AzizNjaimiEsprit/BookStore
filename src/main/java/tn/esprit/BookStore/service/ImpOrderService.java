@@ -2,12 +2,14 @@ package tn.esprit.BookStore.service;
 
 import com.google.gson.Gson;
 import com.stripe.model.Customer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.BookStore.model.Order;
 import tn.esprit.BookStore.model.OrderItem;
-import tn.esprit.BookStore.repository.BookRepository;
+import tn.esprit.BookStore.model.User;
 import tn.esprit.BookStore.repository.OrderRepository;
 
 import java.util.*;
@@ -26,14 +28,18 @@ public class ImpOrderService implements OrderService {
     @Autowired
     OrderItemService orderItemService;
 
+    private static final Logger log = LoggerFactory.getLogger(ImpOrderService.class);
+
     @Transactional
     @Override
     public Order add(Order order) {
 
         //Checking book disponibility
         for (OrderItem item : order.getItems()) {
-            if (item.getQuantity() > bookService.getQuantity(item.getBook().getId()))
+            if (item.getQuantity() > bookService.getQuantity(item.getBook().getId())){
                 return null;
+            }
+
         }
         for (OrderItem item : order.getItems()) {
             if (item.getQuantity() == bookService.getQuantity(item.getBook().getId())) {
@@ -44,6 +50,7 @@ public class ImpOrderService implements OrderService {
         Customer c = paymentService.getCustomer(order.getUser().getEmail());
         String pay_id = paymentService.chargeCustomer(c.getId(), (int) order.getTotalPrice() * 100);
         if (pay_id == null) {
+            log.warn("No Enough money !!!");
             return null;
         } else {
             order.setPaymentID(pay_id);
@@ -144,13 +151,15 @@ public class ImpOrderService implements OrderService {
     }
 
     @Override
-    public Map<String, Double> getBestCustomer() {
-        Map<String, Double> res = new HashMap<>();
+    public Map<User, Double> getBestCustomer() {
+        Map<User, Double> res = new HashMap<>();
+        User user = new User();
         List<Object[]> list = orderRepository.getBestCustomer();
         for (Object[] obj : list) {
-            String name = (String) obj[1];
+            user.setId(Long.parseLong(obj[2].toString()));
+            user.setFull_name((String) obj[1]);
             double sum = (double) obj[0];
-            res.put(name, sum);
+            res.put(user, sum);
             return res;
         }
         return null;
