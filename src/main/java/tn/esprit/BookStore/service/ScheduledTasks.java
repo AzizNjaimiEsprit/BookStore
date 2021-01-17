@@ -30,12 +30,17 @@ public class ScheduledTasks {
     //True Value 604800000 (Week)
     @Scheduled(fixedRate = 60000)
     public void sendGifts() {
-        Map<User,Double> bestCus = orderService.getBestCustomer();
-        User user = userService.GetUser(bestCus.keySet().stream().findFirst().get().getId());
-        Double amount = bestCus.values().stream().findFirst().get();
-        double randomNum = ThreadLocalRandom.current().nextInt(10, amount.intValue() + 1);
-        log.info("Gift Sent Successfully to "+user.getFull_name()+" Amount = "+amount+" Gift = "+randomNum);
-        //Fidelity Service Add Points
-        maillingService.sendGiftEmail(user,randomNum);
+//        Map<User,Double> bestCus = orderService.getBestCustomer();
+//        User user = userService.GetUser(bestCus.keySet().stream().findFirst().get().getId());
+//        Double amount = bestCus.values().stream().findFirst().get();
+//        double randomNum = ThreadLocalRandom.current().nextInt(10, amount.intValue() + 1);
+//        log.info("Gift Sent Successfully to "+user.getFull_name()+" Amount = "+amount+" Gift = "+randomNum);
+//        //Fidelity Service Add Points
+//        maillingService.sendGiftEmail(user,randomNum);
+    }
+
+    @Scheduled(fixedRate = 5000)
+    public void test() {
+        //System.out.println("Current Date"+new Date());
     }
 }
