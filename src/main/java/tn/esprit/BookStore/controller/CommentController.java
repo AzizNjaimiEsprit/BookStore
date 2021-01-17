@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.BookStore.model.Book;
 import tn.esprit.BookStore.model.Comment;
+import tn.esprit.BookStore.model.User;
 import tn.esprit.BookStore.service.CommentServiceImp;
 
 import java.util.List;
@@ -36,5 +37,8 @@ public class CommentController {
     public List<Comment> getListComment(@RequestBody Book b) {
         return commentServiceImp.getListComment(b);
     }
+
+    @GetMapping("getTopFan")
+    public User getTopFan (){return commentServiceImp.getTopFan();}
 
 }
