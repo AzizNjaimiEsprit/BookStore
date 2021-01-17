@@ -31,15 +31,18 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     ArrayList<String> getInputsByGovernorate();
 
     @Query(value = "select QUARTER(order_date),SUM(total_price)" +
-            " as sum from orders group by QUARTER(order_date)", nativeQuery = true)
+            "as sum from orders where YEAR(CURDATE()) = YEAR(order_date)" +
+            "group by QUARTER(order_date)", nativeQuery = true)
     List<Object[]> getInputsByQuarter();
 
     @Query(value = "select MONTH(order_date),SUM(total_price)" +
-            " as sum from orders group by MONTH(order_date)", nativeQuery = true)
+            "as sum from orders where YEAR(CURDATE()) = YEAR(order_date)" +
+            "group by MONTH(order_date)", nativeQuery = true)
     List<Object[]> getInputsByMonth();
 
-    @Query(value = "select MAX(amount) ,full_name,user_id from (select SUM(total_price)  amount , user_id , full_name " +
-            "from orders JOIN user u on orders.user_id = u.id " +
-            "group by user_id order by amount DESC) tab", nativeQuery = true)
+    @Query(value = "select MAX(amount) ,full_name,user_id from (select SUM(o.total_price)  amount , o.user_id , full_name " +
+            "from orders o JOIN user u on o.user_id = u.id " +
+            "where WEEK(CURDATE()) = WEEK(o.order_date)"+
+            "group by o.user_id order by amount DESC) tab", nativeQuery = true)
     List<Object[]> getBestCustomer();
 }

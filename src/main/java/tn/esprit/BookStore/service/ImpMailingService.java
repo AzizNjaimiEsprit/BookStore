@@ -101,7 +101,8 @@ public class ImpMailingService implements Credentials, MaillingService {
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress("samar.neji@esprit.tn"));
             message.setSubject("Alerte : Repture du stock ");
-            message.setText(" Bonjour Admin \n Le Stock du livre N°" + B.getId() + " est en repture du stock " + "\n ** DETAIL DU LIVRE ** \n" + B.toString() + "`\n" + "Cordialement");
+            message.setText(" Bonjour Admin \n Le livre N°" + B.getId() + " est en repture du stock " +
+                    "\n ** DETAIL DU LIVRE ** \n" + B.toString() + "`\n" + "Cordialement");
             System.out.println("Sending out of stock mail ...");
 
             Transport.send(message);

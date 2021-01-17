@@ -55,4 +55,20 @@ public class ImpOrderItemService implements OrderItemService {
         return repository.findById(orderItemId).get();
     }
 
+    @Transactional
+    @Override
+    public List<Book> getUnsaledBooks() {
+        return repository.getUnsaledBooks();
+    }
+
+    @Transactional
+    @Override
+    public Book getBestBook() {
+        // MAX(nbP) ,name ,bookid
+        List<Object[]> list = repository.getBestBook();
+        for (Object[] obj : list) {
+            return bookService.getBookByID((int)obj[2]);
+        }
+        return null;
+    }
 }

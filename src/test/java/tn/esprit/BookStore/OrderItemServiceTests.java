@@ -18,6 +18,8 @@ class OrderItemServiceTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println(oiService.getUnsaledBooks());
+
 		//Test Get All
 		System.out.println("********* Get All **********************");
 		oiService.getOrderItems().forEach(System.out::println);

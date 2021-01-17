@@ -12,11 +12,13 @@ import tn.esprit.BookStore.model.OrderItem;
 import tn.esprit.BookStore.model.User;
 import tn.esprit.BookStore.repository.OrderRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
 public class ImpOrderService implements OrderService {
-    private final Gson gson = new Gson();
+
     @Autowired
     PaymentService paymentService;
     @Autowired
@@ -39,7 +41,6 @@ public class ImpOrderService implements OrderService {
             if (item.getQuantity() > bookService.getQuantity(item.getBook().getId())){
                 return null;
             }
-
         }
         for (OrderItem item : order.getItems()) {
             if (item.getQuantity() == bookService.getQuantity(item.getBook().getId())) {
@@ -55,6 +56,9 @@ public class ImpOrderService implements OrderService {
         } else {
             order.setPaymentID(pay_id);
         }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        order.setOrderDate(dtf.format(now));
         Order insertedOrder = orderRepository.save(order);
         for (OrderItem i : order.getItems()) {
             i.setOrder(insertedOrder);
