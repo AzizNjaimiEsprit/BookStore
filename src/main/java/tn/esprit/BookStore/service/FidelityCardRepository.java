@@ -1,4 +1,4 @@
-package tn.esprit.BookStore.repository;
+package tn.esprit.BookStore.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

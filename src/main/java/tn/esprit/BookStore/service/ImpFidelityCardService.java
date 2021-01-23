@@ -3,7 +3,6 @@ package tn.esprit.BookStore.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.BookStore.model.FidelityCard;
-import tn.esprit.BookStore.repository.FidelityCardRepository;
 
 import java.util.List;
 

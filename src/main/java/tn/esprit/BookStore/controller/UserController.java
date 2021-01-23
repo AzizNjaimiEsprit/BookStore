@@ -3,7 +3,6 @@ package tn.esprit.BookStore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.BookStore.model.User;
-import tn.esprit.BookStore.service.UserService;
 
 import java.util.List;
 
