@@ -32,7 +32,7 @@ public class ImpCouponUsageHistoryService implements CouponUsageHistoryService {
     @Override
     public List<CouponUsageHistory> getHistoryForCoupon(String code) {
         try {
-            return cUHRepository.getHistoryForCoupon(code);
+            return cUHRepository.getCouponUsageHistoryByCouponCode(code);
 
         } catch (Exception ex) {
             //logger

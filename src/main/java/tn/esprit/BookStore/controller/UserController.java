@@ -3,6 +3,7 @@ package tn.esprit.BookStore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.BookStore.model.User;
+import tn.esprit.BookStore.service.ImpUserService;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class UserController {
 
 
     @Autowired
-    private UserService srvUsr;
+    private ImpUserService srvUsr;
 
 
     /// Sign up user
@@ -87,7 +88,7 @@ public class UserController {
     @ResponseBody
     public int Reset(@RequestParam String email) {
         int x = srvUsr.ResetPassword(email);
-        return UserService.coderest;
+        return ImpUserService.coderest;
     }
 
     @GetMapping("/ChangePassword")

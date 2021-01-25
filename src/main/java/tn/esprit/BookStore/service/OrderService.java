@@ -1,5 +1,6 @@
 package tn.esprit.BookStore.service;
 
+import tn.esprit.BookStore.model.Category;
 import tn.esprit.BookStore.model.Order;
 import tn.esprit.BookStore.model.User;
 
@@ -29,5 +30,6 @@ public interface OrderService {
 
     Map<User, Double> getBestCustomer();
 
+    Map<String, List<User>> getClientsFavouriteCategories();
 
 }

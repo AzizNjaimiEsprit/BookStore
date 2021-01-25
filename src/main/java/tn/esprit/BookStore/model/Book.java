@@ -1,9 +1,6 @@
 package tn.esprit.BookStore.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Table(name = "book")
+@ToString
 public class Book {
     @Id
     @Column
@@ -47,5 +45,6 @@ public class Book {
     public Book(int id) {
         this.id = id;
     }
+
 
 }

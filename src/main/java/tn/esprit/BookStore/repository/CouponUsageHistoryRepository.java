@@ -9,10 +9,12 @@ import java.util.List;
 
 public interface CouponUsageHistoryRepository extends JpaRepository<CouponUsageHistory, Integer> {
 
-    @Query(value = "Select * from coupon_usage_history where coupon_code= :code", nativeQuery = true)
-    List<CouponUsageHistory> getHistoryForCoupon(@Param("code") String code);
 
-    @Query(value = "select * from coupon_usage_history where coupon_code= :code AND order_id= :oid AND usage_type= :ut", nativeQuery = true)
+    List<CouponUsageHistory> getCouponUsageHistoryByCouponCode(@Param("code") String code);
+
+
+    @Query(value = "select cuh from CouponUsageHistory cuh " +
+            "where cuh.coupon.code = :code AND cuh.order.id = :oid AND cuh.usageType = :ut")
     CouponUsageHistory checkIfExist(@Param("code") String code, @Param("oid") int oid, @Param("ut") String ut);
 
 }

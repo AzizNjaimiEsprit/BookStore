@@ -7,14 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tn.esprit.BookStore.model.Order;
-import tn.esprit.BookStore.model.OrderItem;
-import tn.esprit.BookStore.model.User;
+import tn.esprit.BookStore.model.*;
+
+import tn.esprit.BookStore.repository.CategoryRepository;
 import tn.esprit.BookStore.repository.OrderRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ImpOrderService implements OrderService {
@@ -29,6 +30,10 @@ public class ImpOrderService implements OrderService {
     BookService bookService;
     @Autowired
     OrderItemService orderItemService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     private static final Logger log = LoggerFactory.getLogger(ImpOrderService.class);
 
@@ -157,15 +162,34 @@ public class ImpOrderService implements OrderService {
     @Override
     public Map<User, Double> getBestCustomer() {
         Map<User, Double> res = new HashMap<>();
-        User user = new User();
-        List<Object[]> list = orderRepository.getBestCustomer();
-        for (Object[] obj : list) {
-            user.setId(Long.parseLong(obj[2].toString()));
-            user.setFull_name((String) obj[1]);
-            double sum = (double) obj[0];
-            res.put(user, sum);
+
+        for (Object[] obj : orderRepository.getBestCustomer()) {
+            res.put(userService.GetUser(Long.parseLong(obj[0].toString())), (double) obj[1]);
             return res;
         }
         return null;
+    }
+
+    @Override
+    public Map<String, List<User>> getClientsFavouriteCategories() {
+        System.out.println("Hiii2");
+        Map<String, List<User>> res = new HashMap<>();
+        List<Object[]> list = orderRepository.getClientsFavouriteCategories();
+        Map<Integer, List<Object[]>> map = list.stream().collect(Collectors.groupingBy(objects -> Integer.parseInt(objects[1].toString())));
+        for (Integer i : map.keySet()) {
+            Collections.sort(map.get(i),((o1, o2) -> Integer.parseInt(o2[2].toString())  - Integer.parseInt(o1[2].toString())));
+            for(Object[] obj : map.get(i)){
+                String catName = (String) obj[0];
+                if (res.get(catName) == null){
+                    ArrayList<User> tmp = new ArrayList<>();
+                    tmp.add(userService.GetUser(Long.parseLong(i.toString())));
+                    res.put(catName,tmp);
+                }else {
+                    res.get(catName).add(userService.GetUser(Long.parseLong(i.toString())));
+                }
+                break;
+            }
+        }
+        return res;
     }
 }

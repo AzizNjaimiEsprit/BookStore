@@ -12,12 +12,13 @@ import java.util.List;
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 
-    @Query(value = "SELECT * FROM order_item  where order_id = :id", nativeQuery = true)
-    List<OrderItem> findAllByOrder(@Param("id") Integer id);
 
-    @Query(value = "select MAX(nbP) ,name ,bookid from (select SUM(oi.quantity)  nbP , oi.book_id as bookid , b.title as name " +
-            "from order_item oi JOIN book b on oi.book_id = b.id " +
-            "group by oi.book_id order by nbP DESC) tab",nativeQuery = true)
+    List<OrderItem> findByOrderId(@Param("id") Integer id);
+
+    @Query(value = "select o.book.id as book_id , SUM(o.quantity) as somme " +
+            "from OrderItem  o" +
+            " group by book_id " +
+            "ORDER BY somme DESC")
     List<Object[]> getBestBook ();
 
     @Query(value = "select b from Book b left join OrderItem oi on b.id = oi.book.id")

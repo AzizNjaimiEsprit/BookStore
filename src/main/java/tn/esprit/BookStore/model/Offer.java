@@ -28,7 +28,7 @@ public class Offer implements Serializable {
     private float price;
     private String image;
     private String status;
-    @Temporal(TemporalType.TIMESTAMP)
+    /*@Temporal(TemporalType.DATE)
     @Column(name = "offer_date")
-    private java.sql.Timestamp offerDate;
+    private java.sql.Timestamp offerDate;*/
 }
