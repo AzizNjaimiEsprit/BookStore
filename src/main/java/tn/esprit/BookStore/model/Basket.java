@@ -10,14 +10,13 @@ public class Basket implements Serializable {
     private BasketPK id;
     private int quantity;
     @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name="user_id", insertable = false,updatable = false)
     private User user;
     @ManyToOne
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+    @JoinColumn(name="book_id",insertable = false,updatable = false)
     private Book book;
 
-
-    public BasketPK getId() {
+    public Object getId() {
         return id;
     }
 
