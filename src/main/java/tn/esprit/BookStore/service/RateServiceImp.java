@@ -7,6 +7,8 @@ import tn.esprit.BookStore.model.Book;
 import tn.esprit.BookStore.model.Rate;
 import tn.esprit.BookStore.repository.RateRepository;
 
+import java.util.List;
+
 @Service
 public class RateServiceImp implements RateService {
     @Autowired
@@ -28,8 +30,8 @@ public class RateServiceImp implements RateService {
     }
 
     @Override
-    public Rate getRate(Rate r) {
-        return rateRepository.getrate(r.getB(), r.getU());
+    public Rate getRate(int id_book , int id_user) {
+        return  rateRepository.getRateByBookIdAndUserId(id_book,id_user);
     }
 
     @Override

@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.BookStore.model.Book;
+import tn.esprit.BookStore.model.User;
 import tn.esprit.BookStore.repository.BookRepository;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -15,10 +18,22 @@ public class BookServiceImp implements BookService {
 
     @Autowired
     BookRepository bookRepository;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    MaillingService maillingService;
 
     @Override
     public Book addBook(Book b) {
-        return bookRepository.save(b);
+        Book res = bookRepository.save(b);
+        String category=b.getCategory().getName();
+        Map<String, List<User>> matching = orderService.getClientsFavouriteCategories();
+        List<User> users = matching.get(category);
+        for (User i:users)
+        {
+          maillingService.sendMatchingEmail(i,b);
+        }
+        return res;
     }
 
     @Override
@@ -53,11 +68,12 @@ public class BookServiceImp implements BookService {
 
     @Override
     public int getQuantity(int id) {
-        return bookRepository.getQuantity(id);
+
+        return bookRepository.findById(id).get().getQuantity();
     }
 
     @Override
     public void setQuantity(int id, int newQ) {
-        bookRepository.setQuantity(id, newQ);
+       bookRepository.findById(id).get().setQuantity(newQ);
     }
 }

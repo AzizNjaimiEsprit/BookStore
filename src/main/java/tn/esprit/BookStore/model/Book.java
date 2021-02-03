@@ -3,7 +3,7 @@ package tn.esprit.BookStore.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 @Getter
 @Setter
@@ -41,6 +41,8 @@ public class Book {
     private String Authors;
 
     private boolean isDiscounted = false;
+    @ManyToOne
+    private Packet pkt;
 
     public Book(int id) {
         this.id = id;

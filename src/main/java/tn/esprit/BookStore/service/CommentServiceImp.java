@@ -16,6 +16,8 @@ public class CommentServiceImp implements CommentService {
     CommentRepository commentRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    BookService bookService;
     @Override
     public void addComment(Comment c) {
         commentRepository.save(c);
@@ -33,7 +35,7 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public List<Comment> getListComment(Book b) {
-        return commentRepository.getAllComment(b.getId());
+        return commentRepository.getAllByBookId(b.getId());
     }
 
     @Transactional

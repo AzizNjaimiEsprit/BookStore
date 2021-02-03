@@ -10,7 +10,7 @@ public interface RateService {
 
     void updateRate(Rate r);
 
-    Rate getRate(Rate r);
+    public Rate getRate(int id_book , int id_user);
 
     double getMoyRates(Book b);
 }

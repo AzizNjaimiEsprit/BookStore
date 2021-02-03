@@ -10,22 +10,25 @@ public class Rate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int rate;
-    private int book_id;
-    private int user_id;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-
-    public Rate(int id, int book, int user, int rate) {
+    public Rate(int id, int rate, Book book, User user) {
         this.id = id;
-        this.book_id = book;
-        this.user_id = user;
         this.rate = rate;
+        this.book = book;
+        this.user = user;
     }
 
     public Rate() {
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -33,45 +36,52 @@ public class Rate {
     }
 
     public int getRate() {
-        return this.rate;
+        return rate;
     }
 
     public void setRate(int rate) {
         this.rate = rate;
     }
 
-    public int getB() {
-        return this.book_id;
+    public Book getBook() {
+        return book;
     }
 
-    public void setB(int b) {
-        this.book_id = b;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public int getU() {
-        return this.user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setU(int u) {
-        this.user_id = u;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String toString() {
-        return "Rate{id=" + this.id + ", rate=" + this.rate + ", b=" + this.book_id + ", u=" + this.user_id + '}';
-    }
-
+    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (o != null && this.getClass() == o.getClass()) {
-            Rate rate1 = (Rate) o;
-            return this.getId() == rate1.getId();
-        } else {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rate rate1 = (Rate) o;
+        return getId() == rate1.getId() &&
+                getRate() == rate1.getRate() &&
+                Objects.equals(getBook(), rate1.getBook()) &&
+                Objects.equals(getUser(), rate1.getUser());
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(this.getId(), this.getRate(), this.book_id, this.user_id);
+        return Objects.hash(getId(), getRate(), getBook(), getUser());
+    }
+
+    @Override
+    public String toString() {
+        return "Rate{" +
+                "id=" + id +
+                ", rate=" + rate +
+                ", book=" + book.getId() +
+                ", user=" + user.getId() +
+                '}';
     }
 }
