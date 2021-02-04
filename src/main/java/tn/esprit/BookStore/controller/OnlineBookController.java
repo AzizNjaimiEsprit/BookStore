@@ -3,7 +3,7 @@ package tn.esprit.BookStore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.BookStore.model.OnlineBook;
-import tn.esprit.BookStore.service.OnlineBookServiceImp;
+import tn.esprit.BookStore.service.ImpOnlineBookService;
 
 import java.util.ArrayList;
 
@@ -11,36 +11,36 @@ import java.util.ArrayList;
 @RestController
 public class OnlineBookController {
     @Autowired
-    OnlineBookServiceImp onlineBookServiceImp;
+    ImpOnlineBookService impOnlineBookService;
 
     @PostMapping("/addOnlineBook")
     public void addOnlineBook(@RequestBody OnlineBook b) {
-        onlineBookServiceImp.addBook(b);
+        impOnlineBookService.addBook(b);
     }
 
     @PostMapping("/deleteOnlineBook")
     public void deletOnlineBook(@RequestBody OnlineBook b) {
-        onlineBookServiceImp.deleteBook(b);
+        impOnlineBookService.deleteBook(b);
     }
 
     @PostMapping("/updateOnlineBook")
     public void updateOnlineBook(@RequestBody OnlineBook b) {
-        onlineBookServiceImp.updateBook(b);
+        impOnlineBookService.updateBook(b);
     }
 
     @GetMapping("/getOnlineBookList")
     public ArrayList<OnlineBook> getBookList() {
-        return onlineBookServiceImp.getBookList();
+        return impOnlineBookService.getBookList();
     }
 
     @GetMapping("/getOnlineBook/{id}")
     public OnlineBook getOnlineBookbyId(@PathVariable int id) {
-        return onlineBookServiceImp.getBookByID(id);
+        return impOnlineBookService.getBookByID(id);
     }
 
     @GetMapping("/getOnlineQuantity/{id}")
     public int getOnlineQuantity(@PathVariable int id) {
-        return onlineBookServiceImp.getQuantity(id);
+        return impOnlineBookService.getQuantity(id);
     }
 
 

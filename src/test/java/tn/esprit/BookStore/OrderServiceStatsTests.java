@@ -42,6 +42,8 @@ class OrderServiceStatsTests {
 		//Test Best Book
 		System.out.println(orderItemService.getBestBook());
  */
+		//Test Client Matching
+		orderService.getClientsFavouriteCategories().forEach((k,v)-> System.out.println(k+":"+v));
 
 
 	}

@@ -8,7 +8,7 @@ import tn.esprit.BookStore.repository.OnlineBookRepository;
 import java.util.ArrayList;
 
 @Service
-public class OnlineBookServiceImp implements OnlineBookService {
+public class ImpOnlineBookService implements OnlineBookService {
     @Autowired
     OnlineBookRepository onlineBookRepository;
 

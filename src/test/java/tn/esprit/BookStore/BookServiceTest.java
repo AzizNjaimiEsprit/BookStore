@@ -22,6 +22,9 @@ public class BookServiceTest {
 
     @Test
     void contextLoads() throws ParseException {
+        Book book = bookService.getBookByID(34);
+        book.setId(0);
+        bookService.addBook(book);
      /*   Category c = new Category(1,"cat1");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date dateDebut = dateFormat.parse("30/09/2019");

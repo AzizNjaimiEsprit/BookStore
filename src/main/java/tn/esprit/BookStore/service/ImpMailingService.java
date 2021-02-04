@@ -120,7 +120,7 @@ public class ImpMailingService implements Credentials, MaillingService {
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
             message.setSubject("Nouvelle arrivage ");
-            message.setText(" Un nouveau livre arrive qui vous peut etre vous parait intéressant /n"+
+            message.setText("\n\n Un nouveau livre arrive qui vous peut etre vous parait intéressant \n\n"+
                     "https://bookstore.tn/book/"+b.getId());
             System.out.println("Sending matching mail ...");
 
