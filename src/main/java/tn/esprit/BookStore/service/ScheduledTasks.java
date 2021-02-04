@@ -6,6 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import tn.esprit.BookStore.model.FidelityCard;
+import tn.esprit.BookStore.model.User;
+
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class ScheduledTasks {
@@ -26,7 +31,7 @@ public class ScheduledTasks {
     OrderItemService orderItemService;
 
     @Autowired
-    FidelityCardRepository fidelityCardRepository;
+    FidelityCardService fidelityCardService;
 
 
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
@@ -37,10 +42,11 @@ public class ScheduledTasks {
 //        Map<User,Double> bestCus = orderService.getBestCustomer();
 //        User user = userService.GetUser(bestCus.keySet().stream().findFirst().get().getId());
 //        Double amount = bestCus.values().stream().findFirst().get();
-//        double randomNum = ThreadLocalRandom.current().nextInt(10, amount.intValue() + 1);
+//        int randomNum = ThreadLocalRandom.current().nextInt(10, amount.intValue() + 1);
 //        log.info("Gift Sent Successfully to "+user.getFull_name()+" Amount = "+amount+" Gift = "+randomNum);
-//        //Fidelity Service Add Points
-
+//        FidelityCard fidelityCard = fidelityCardService.getCard(user.getId());
+//        fidelityCard.setPoints(fidelityCard.getPoints() + randomNum);
+//        fidelityCardService.updateCard(fidelityCard);
 //        maillingService.sendGiftEmail(user,randomNum);
     }
 

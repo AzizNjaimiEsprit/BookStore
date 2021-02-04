@@ -20,26 +20,26 @@ import java.util.List;
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
     private List<OrderItem> items;
-    @Column
+
     private float totalPrice;
-    @Column
+
     private String paymentID;
-    @Column
+
     private String orderDate;
-    @Column
+
     private String address;
-    @Column
+
     private int zipCode;
-    @Column
+
     private String numTel;
-    @Column
+
     private String status;
 
     public Order(int id) {
