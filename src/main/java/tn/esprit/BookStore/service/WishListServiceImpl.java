@@ -3,15 +3,23 @@ package tn.esprit.BookStore.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.BookStore.model.Basket;
+import tn.esprit.BookStore.model.Book;
 import tn.esprit.BookStore.model.WishList;
+import tn.esprit.BookStore.repository.BookRepository;
 import tn.esprit.BookStore.repository.WishListRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class WishListServiceImpl implements IWishListService<WishList>{
+public class WishListServiceImpl implements IWishListService<WishList> {
     @Autowired
     WishListRepository wishListRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
 
     @Override
@@ -20,35 +28,47 @@ public class WishListServiceImpl implements IWishListService<WishList>{
     }
 
     @Override
-    public WishList findById(Long id) {
+    public WishList findById(int id) {
         return wishListRepository.findById(id).get();
     }
 
     @Override
-    public WishList create(WishList wishList) {
+    public WishList addWishList(WishList wishList) {
         return wishListRepository.save(wishList);
     }
 
     @Override
-    public WishList update(WishList wishList) {
-        return wishListRepository.save(wishList);
+    public WishList addBookToWishList(int bookId, int wishListId) {
+        WishList wishList1 = wishListRepository.findById(wishListId).get();
+        Book book = bookRepository.findById(bookId).get();
+
+        wishList1.getBooks().add(book);
+        return wishListRepository.save(wishList1);
+    }
+
+
+    @Override
+    public void deleteBookFromWishList(int wishListId, int bookId) {
+        try{
+            WishList wishList = wishListRepository.findById(wishListId).get();
+            Book book = bookRepository.findById(bookId).get();
+            wishList.getBooks().remove(book);
+            wishListRepository.save(wishList);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+}
+
+    @Override
+    public void returnWishListByUserId(int userId) {
+
     }
 
     @Override
-    public void saveBookToWishList(WishList wishList) {
+    public void savedAll(List<Book> book) {
+//        wishListRepository.saveAll(Arrays.asList(book.get(0)));
 
     }
 
-    @Override
-    public void deleteBookFromWishList(long bookId) {
-
-        WishList wishList =  wishListRepository.findById(bookId).get();
-        wishListRepository.removeBookFromWishList(wishList.getBook().getId());
-
-    }
-
-    @Override
-    public void returnWishListByUserId(long userId) {
-
-    }
 }

@@ -4,9 +4,10 @@ package tn.esprit.BookStore.service;
 import java.util.List;
 
 public interface ICategoryService<T> {
+
     List<T> findAll();
 
-    T findById(Long id);
+    T findByName(String name);
 
     T create(T category);
 

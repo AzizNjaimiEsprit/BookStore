@@ -46,7 +46,7 @@ public class ImpOrderItemService implements OrderItemService {
     @Transactional
     @Override
     public List<OrderItem> getOrderItems(int orderId) {
-        return repository.findAllByOrder(orderId);
+        return repository.findByOrderId(orderId);
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class ImpOrderItemService implements OrderItemService {
         // MAX(nbP) ,name ,bookid
         List<Object[]> list = repository.getBestBook();
         for (Object[] obj : list) {
-            return bookService.getBookByID((int)obj[2]);
+            return bookService.getBookByID((int)obj[0]);
         }
         return null;
     }

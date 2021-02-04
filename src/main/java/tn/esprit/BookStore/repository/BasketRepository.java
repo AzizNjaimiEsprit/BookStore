@@ -8,17 +8,29 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.esprit.BookStore.model.Basket;
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+
 @Repository
-public interface BasketRepository extends JpaRepository<Basket, Long> {
+public interface BasketRepository extends JpaRepository<Basket, Integer> {
 
-    @Modifying
-    @Query(value = "Insert into Basket values (:book_id , :user_id, :quantity)", nativeQuery = true)
-    void addBookToBasket(@Param("book_id") long bookId, @Param("user_id") long userId, @Param("quantity") long quantity );
+////    @Modifying
+////    @Query(value = "Insert into Basket values (, :user_id, :quantity)", nativeQuery = true)
+////    Basket addBookToBasket(@Param("book_id") long bookId, @Param("user_id") long userId, @Param("quantity") long quantity );
+//
+//    @Modifying
+//    @Query("delete from Basket b where b.bookList.)
+//    void removeBookFromBasket(@Param("book_id") long bookId);
+////
+////    @Query("select b from Basket b where b.user.id=:user_id")
+////    Basket getBasketByUserId(@Param("user_id") long userId);
+////
+////
+//    @Modifying
+//    @Query(value = "update Basket b set b.quantity = :quantity where b.bookList.book.getI)
+//    void setOnlineQuantity(@Param("id") int id, @Param("newQ") int newQ);
 
-    @Modifying
-    @Query("delete from Basket where book.id=:book_id")
-    void removeBookFromBasket(@Param("book_id") long bookId);
 
-    @Query("select b from Basket b where b.user.id=:user_id")
-    Basket getBasketByUserId(@Param("user_id") long userId);
+
 }

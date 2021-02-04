@@ -1,20 +1,30 @@
 package tn.esprit.BookStore.service;
 
+import tn.esprit.BookStore.model.Basket;
+import tn.esprit.BookStore.model.BasketBook;
+import tn.esprit.BookStore.model.User;
+
 import java.util.List;
 
 public interface IBasketService<T>{
 
     List<T> findAll();
 
-    T findById(Long id);
+    void deleteBasket (int idBasket);
+    void deleteBasketFromBook (int idBook, int idBasket);
+    BasketBook addBookToBasket(BasketBook basketBook);
+    void updateQuantityBook (BasketBook basketBook);
+     Basket ajouterBasket(Basket basket);
 
-    T create(T basket);
-
-    T update(T basket, int quantity);
-
-    void saveBookToBasket(long bookId, long basketId);
-    void deleteBookFromBasket(long bookId);
     void returnBasketByUserId (long userId);
+
+//    public int getNombreBooks(Basket basket);
+
+    public List<String> getAllBooksName(Basket basket);
+
+
+    public void deleteAllBooks(Basket basket);
+    public float getPriceByBookId(int bookId);
 
 
 

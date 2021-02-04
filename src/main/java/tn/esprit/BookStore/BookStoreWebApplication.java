@@ -2,6 +2,7 @@ package tn.esprit.BookStore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import tn.esprit.BookStore.service.ScheduledTasks;
 

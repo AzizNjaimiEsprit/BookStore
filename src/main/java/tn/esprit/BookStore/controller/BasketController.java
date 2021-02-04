@@ -4,8 +4,11 @@ package tn.esprit.BookStore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.BookStore.model.Basket;
-import tn.esprit.BookStore.service.BasketServiceImpl;
+import tn.esprit.BookStore.model.BasketBook;
+import tn.esprit.BookStore.model.Book;
+import tn.esprit.BookStore.service.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,59 +17,63 @@ import java.util.List;
 public class BasketController {
 
     @Autowired
-    private BasketServiceImpl basketServiceImpl;
+    private IBasketService basketService;
 
-    @PostMapping("/findAll")
-    public List<Basket> findAll(){
-        return basketServiceImpl.findAll();
+    @Autowired
+    private ImpUserService impUserService;
+
+    @Autowired
+    private BookServiceImp bookServiceImp;
+
+
+
+
+
+    @DeleteMapping("/")
+    public String deleteBookFromBasket(int idBook, int idBasket) {
+        basketService.deleteBasketFromBook(idBook,idBasket);
+        return "Book deleted from basket";
+
     }
 
-    @GetMapping("/")
-    Basket findById(Long id){
-        return  basketServiceImpl.findById(id);
-    }
-
-    @PostMapping("/create")
-    Basket  create( Basket basket){
-        return basketServiceImpl.create(basket);
+    @PostMapping ("/")
+    public BasketBook addBookToBasket(@RequestBody BasketBook basketBook) {
+        return basketService.addBookToBasket(basketBook);
     }
 
     @PutMapping("/")
-    Basket  update(Basket basket, int quantity){
-        return basketServiceImpl.update(basket,quantity);
+    public void updateQuantityBook(@RequestBody BasketBook basketBook) {
+        basketService.updateQuantityBook(basketBook);
     }
 
-    @PostMapping("/saveBook")
-    HashMap<String, String> saveBookToBasket(long bookId, long basketId) {
-        HashMap map = new HashMap();
-        try {
-            basketServiceImpl.saveBookToBasket(bookId, basketId);
-            map.put("state", "Ajout avec succés");
-        } catch (Exception e) {
-            map.put("state", "Erreur d'ajout");
-
-        }
-        return map;
+    @GetMapping ("/findAllBaskets")
+    public List<Basket> findAll(){
+        return basketService.findAll();
     }
 
-    @DeleteMapping("/")
-    HashMap <String, String> deleteBookFromBasket(long bookId){
-        HashMap map = new HashMap();
-        try{
-            basketServiceImpl.deleteBookFromBasket(bookId);
-            map.put("state", "Supprimé avec succés");
-        } catch (Exception e) {
-            map.put("state", "Erreur de suprission");
 
-        }
-        return map;
+    @PostMapping("/create")
+    Basket  createBasket (int id_user){
+        Basket basket = new Basket();
+        basket.setUser(impUserService.GetUser(id_user));
+        return basketService.ajouterBasket(basket);
+
     }
 
+    @DeleteMapping("/basket")
+    public String deleteBasket(int idBasket) {
+        basketService.deleteBasket(idBasket);
+         return "Basket deleted";
+    }
+
+
+
+    @GetMapping("/get")
     HashMap <String, String> returnBasketByUserId (long userId){
         HashMap map = new HashMap();
 
         try{
-            basketServiceImpl.returnBasketByUserId(userId);
+            basketService.returnBasketByUserId(userId);
             map.put("state", "Succées");
         } catch (Exception e) {
             map.put("state", "Erreur");
@@ -74,6 +81,10 @@ public class BasketController {
         }
         return map;
     }
+
+
+
+
 
 }
 

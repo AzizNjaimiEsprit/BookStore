@@ -18,8 +18,8 @@ public class CategoryServiceImpl implements ICategoryService<Category>{
     }
 
     @Override
-    public Category findById(Long id) {
-        return categoryRepository.findById(id).get();
+    public Category findByName(String name) {
+        return categoryRepository.findByName(name);
     }
 
     @Override
@@ -29,7 +29,9 @@ public class CategoryServiceImpl implements ICategoryService<Category>{
 
     @Override
     public Category update(Category category) {
-        return categoryRepository.save(category);
+        Category category1 = categoryRepository.findById(category.getId()).get();
+        category1.setName(category.getName());
+       return categoryRepository.save(category1);
     }
 
 

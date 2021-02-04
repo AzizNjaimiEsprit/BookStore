@@ -1,12 +1,11 @@
 package tn.esprit.BookStore.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 @Getter
 @Setter
@@ -14,8 +13,10 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Table(name = "book")
+@ToString
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
 
@@ -44,8 +45,17 @@ public class Book {
 
     private boolean isDiscounted = false;
 
+    @JsonIgnore
+    @OneToMany(mappedBy="book")
+    private List<BasketBook> basketBook;
+
     public Book(int id) {
         this.id = id;
     }
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "books")
+    private List<WishList> wishLists;
+
 
 }

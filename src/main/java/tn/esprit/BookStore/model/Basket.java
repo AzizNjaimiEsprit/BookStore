@@ -1,37 +1,38 @@
 package tn.esprit.BookStore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Basket implements Serializable {
-    @EmbeddedId
-    private BasketPK id;
-    private int quantity;
-    @OneToOne
-    @JoinColumn(name="user_id", insertable = false,updatable = false)
-    private User user;
-    @ManyToOne
-    @JoinColumn(name="book_id",insertable = false,updatable = false)
-    private Book book;
 
-    public Object getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+
+    @OneToOne
+    @JoinColumn(name="user_id",updatable = false, unique = true)
+    private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="basket")
+    private List <BasketBook> basketBooks;
+
+    public Basket() {
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(BasketPK id) {
+    public void setId(int id) {
         this.id = id;
     }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
 
     public User getUser() {
         return user;
@@ -41,12 +42,12 @@ public class Basket implements Serializable {
         this.user = user;
     }
 
-    public Book getBook() {
-        return book;
+    public List<BasketBook> getBasketBooks() {
+        return basketBooks;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBasketBooks(List<BasketBook> basketBooks) {
+        this.basketBooks = basketBooks;
     }
 
     @Override
@@ -54,19 +55,11 @@ public class Basket implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Basket basket = (Basket) o;
-        return quantity == basket.quantity && Objects.equals(id, basket.id);
+        return id == basket.id && Objects.equals(user, basket.user) && Objects.equals(basketBooks, basket.basketBooks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, quantity);
-    }
-
-    @Override
-    public String toString() {
-        return "Basket{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                '}';
+        return Objects.hash(id, user, basketBooks);
     }
 }

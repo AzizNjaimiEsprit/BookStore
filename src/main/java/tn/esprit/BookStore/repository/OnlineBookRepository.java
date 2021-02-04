@@ -9,6 +9,7 @@ import tn.esprit.BookStore.model.OnlineBook;
 
 @Repository
 public interface OnlineBookRepository extends JpaRepository<OnlineBook, Integer> {
+
     @Query(value = "select b.quantity from Book b where b.id = :id")
     int getQuantity(@Param("id") int id);
 

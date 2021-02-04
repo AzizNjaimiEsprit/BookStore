@@ -1,21 +1,26 @@
 package tn.esprit.BookStore.service;
 
 
+import tn.esprit.BookStore.model.BasketBook;
+import tn.esprit.BookStore.model.Book;
 import tn.esprit.BookStore.model.WishList;
 
 import java.util.List;
 
 public interface IWishListService <T>{
 
-    List<WishList> findAll();
+    List<T> findAll();
 
-    T findById(Long id);
+    WishList findById(int id);
 
-    T create(T wishList);
+    WishList addWishList(WishList wishList);
 
-    T update(T WishList);
+    WishList addBookToWishList(int bookId, int wishlistId);
 
-    void saveBookToWishList(T wishList);
-    void deleteBookFromWishList(long bookId);
-    void returnWishListByUserId (long userId);
+
+    public void deleteBookFromWishList(int wishListId, int bookId);
+
+
+    void returnWishListByUserId (int userId);
+    void savedAll(List <Book> book);
 }

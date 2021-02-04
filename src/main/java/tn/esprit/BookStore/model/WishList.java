@@ -1,37 +1,49 @@
 package tn.esprit.BookStore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "wishlist")
 public class WishList implements Serializable {
-    @EmbeddedId
-    private WishListPK id;
-    @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
-    @ManyToOne
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
-    private Book book;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+
+    @OneToOne
+    @JoinColumn(name="user_id",updatable = false, unique = true)
+    private User user;
+
+
+    @ManyToMany @JoinTable (name = "book_wishList", joinColumns = @JoinColumn
+            (name = "wishList_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn
+                    (name = "book_id", referencedColumnName = " id "))
+    private Set<Book> books;
+
+    public WishList(int id, User user, Set<Book> books) {
+        this.id = id;
+        this.user = user;
+        this.books = books;
+    }
 
     public WishList() {
     }
 
-    public WishList(WishListPK id) {
-        this.id = id;
-    }
-
-    public WishListPK getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(WishListPK id) {
+    public void setId(int id) {
         this.id = id;
     }
-
 
     public User getUser() {
         return user;
@@ -41,12 +53,21 @@ public class WishList implements Serializable {
         this.user = user;
     }
 
-    public Book getBook() {
-        return book;
+    public Set<Book> getBooks() {
+        return books;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "WishList{" +
+                "id=" + id +
+                ", user=" + user +
+                ", books=" + books +
+                '}';
     }
 
     @Override
@@ -54,19 +75,12 @@ public class WishList implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WishList wishList = (WishList) o;
-        return Objects.equals(id, wishList.id);
+        return Objects.equals(id, wishList.id) && Objects.equals(user, wishList.user) && Objects.equals(books, wishList.books);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "WishList{" +
-                "id=" + id +
-                '}';
+        return Objects.hash(id, user, books);
     }
 }
 

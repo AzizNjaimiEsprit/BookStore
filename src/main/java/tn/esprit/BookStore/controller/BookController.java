@@ -15,8 +15,9 @@ public class BookController {
     BookServiceImp bookServiceImp;
 
     @PostMapping("/addBook")
-    public void addBook(@RequestBody Book b) {
-        bookServiceImp.addBook(b);
+    public Book addBook(@RequestBody Book b) {
+        return bookServiceImp.addBook(b);
+
     }
 
     @PostMapping("/deleteBook")

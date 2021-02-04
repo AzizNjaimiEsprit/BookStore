@@ -24,25 +24,40 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     void updateStatus(@Param("status") String status, @Param("id") Integer id);
 
     //Stats
-    @Query(value = "select CONCAT(z.governorate,':',SUM(o.total_price)) as sum " +
-            "from orders o, zip_codestn z " +
-            "where z.code like  CONCAT(SUBSTR(o.zip_code, 1, 2),'__')" +
-            "GROUP BY z.governorate",nativeQuery = true)
-    ArrayList<String> getInputsByGovernorate();
 
-    @Query(value = "select QUARTER(order_date),SUM(total_price)" +
-            "as sum from orders where YEAR(CURDATE()) = YEAR(order_date)" +
-            "group by QUARTER(order_date)", nativeQuery = true)
+//    @Query(value = "select CONCAT(z.governorate,':',SUM(o.totalPrice)) as sum " +
+//            "from Order o, ZipCodesTN z " +
+//            "where z.code like  FUNCTION('CONCAT',function('SUBSTR',o.zipCode,1,2),'__' ) " +
+//            "GROUP BY z.governorate")
+//    ArrayList<String> getInputsByGovernorate();
+
+    @Query(value = "select FUNCTION('QUARTER',o.orderDate),SUM(o.totalPrice)" +
+            "as sum from Order o where FUNCTION('YEAR',current_date) = FUNCTION('YEAR',o.orderDate)" +
+            "group by FUNCTION('QUARTER',o.orderDate)")
     List<Object[]> getInputsByQuarter();
 
-    @Query(value = "select MONTH(order_date),SUM(total_price)" +
-            "as sum from orders where YEAR(CURDATE()) = YEAR(order_date)" +
-            "group by MONTH(order_date)", nativeQuery = true)
+
+    @Query(value = "select FUNCTION('MONTH',o.orderDate) ,SUM(o.totalPrice)" +
+            "as sum from Order o where FUNCTION('YEAR',current_date) = FUNCTION('YEAR',o.orderDate)" +
+            "group by FUNCTION('MONTH',o.orderDate)")
     List<Object[]> getInputsByMonth();
 
-    @Query(value = "select MAX(amount) ,full_name,user_id from (select SUM(o.total_price)  amount , o.user_id , full_name " +
-            "from orders o JOIN user u on o.user_id = u.id " +
-            "where WEEK(CURDATE()) = WEEK(o.order_date)"+
-            "group by o.user_id order by amount DESC) tab", nativeQuery = true)
+
+
+    @Query(value = "select o.user.id as user_id ,SUM(o.totalPrice) as somme " +
+            "from Order o " +
+            "GROUP BY user_id " +
+            "ORDER BY somme DESC")
     List<Object[]> getBestCustomer();
+
+    @Query(value = "select c.name , o.user.id, SUM(oi.quantity) as nb " +
+            "from Order o join OrderItem oi on o.id = oi.order.id " +
+            "JOIN Book b on b.id = oi.book.id " +
+            "JOIN Category c on c.id = b.category.id " +
+            "GROUP BY c.name, o.user.id")
+    List<Object[]> getClientsFavouriteCategories();
+
+
+    @Query(value = "select o.id,u.full_name from Order o JOIN User u on o.user.id = u.id")
+    List<Object[]> getTest();
 }

@@ -112,4 +112,8 @@ public class OrderController {
         return Response.getResponseEntity("true", orderService.getBestCustomer());
     }
 
+    @GetMapping("/getClientMatching")
+    ResponseEntity getClientMatching() {
+        return Response.getResponseEntity("true", orderService.getClientsFavouriteCategories());
+    }
 }
