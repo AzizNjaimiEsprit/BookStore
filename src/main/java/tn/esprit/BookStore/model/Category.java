@@ -1,40 +1,29 @@
 package tn.esprit.BookStore.model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "category")
 public class Category implements Serializable {
-    @Id
-    @Column
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column(nullable = false, unique = true)
     private String name;
-
+    @OneToMany(mappedBy = "Category")
+    private Set<FavoriteCategorie> Fcc;
+ 
+    public Category() {
+    }
+ 
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Category() {
-
-    }
-
-    public Category(String name) {
-        this.name = name;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -45,27 +34,32 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Category other = (Category) obj;
-        if (id != other.id)
-            return false;
-        if (name == null) {
-            return other.name == null;
-        } else return name.equals(other.name);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id && Objects.equals(name, category.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
-        return name;
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
-
-
 }
