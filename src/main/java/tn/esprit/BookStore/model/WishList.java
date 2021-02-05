@@ -82,5 +82,6 @@ public class WishList implements Serializable {
     public int hashCode() {
         return Objects.hash(id, user, books);
     }
+
 }
 

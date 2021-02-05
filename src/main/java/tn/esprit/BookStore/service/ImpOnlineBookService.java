@@ -8,7 +8,7 @@ import tn.esprit.BookStore.repository.OnlineBookRepository;
 import java.util.ArrayList;
 
 @Service
-public class OnlineBookServiceImp implements OnlineBookService {
+public class ImpOnlineBookService implements OnlineBookService {
     @Autowired
     OnlineBookRepository onlineBookRepository;
 
@@ -41,14 +41,14 @@ public class OnlineBookServiceImp implements OnlineBookService {
     public OnlineBook getBookByID(int id) {
         return onlineBookRepository.findById(id).get();
     }
-
     @Override
     public int getQuantity(int id) {
-        return onlineBookRepository.getQuantity(id);
+
+        return onlineBookRepository.findById(id).get().getBook().getQuantity();
     }
 
     @Override
     public void setOnlineQuantity(int id, int newQ) {
-        onlineBookRepository.setOnlineQuantity(id, newQ);
+        onlineBookRepository.findById(id).get().getBook().setQuantity(newQ);
     }
 }

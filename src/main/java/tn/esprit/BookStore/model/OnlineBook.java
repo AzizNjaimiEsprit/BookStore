@@ -1,9 +1,13 @@
 package tn.esprit.BookStore.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "online_book")
@@ -71,4 +75,9 @@ public class OnlineBook implements Serializable {
                 ", url='" + url + '\'' +
                 '}';
     }
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "onlineBooks")
+    private List<OnLineWishList> onLineWishLists;
+
 }

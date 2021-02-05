@@ -18,9 +18,8 @@ public interface IWishListService <T>{
     WishList addBookToWishList(int bookId, int wishlistId);
 
 
-    public void deleteBookFromWishList(int wishListId, int bookId);
+     void deleteBookFromWishList(int wishListId, int bookId);
 
 
-    void returnWishListByUserId (int userId);
-    void savedAll(List <Book> book);
+    int countBestBookInWishList(Book bestBook);
 }

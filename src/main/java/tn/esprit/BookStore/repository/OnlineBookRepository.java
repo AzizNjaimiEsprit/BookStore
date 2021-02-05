@@ -13,7 +13,7 @@ public interface OnlineBookRepository extends JpaRepository<OnlineBook, Integer>
     @Query(value = "select b.quantity from Book b where b.id = :id")
     int getQuantity(@Param("id") int id);
 
-    @Modifying
-    @Query(value = "update Book b set b.quantity = :newQ where b.id = :id")
-    void setOnlineQuantity(@Param("id") int id, @Param("newQ") int newQ);
+
+
+
 }

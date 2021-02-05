@@ -172,7 +172,7 @@ public class ImpOrderService implements OrderService {
 
     @Override
     public Map<String, List<User>> getClientsFavouriteCategories() {
-        System.out.println("Hiii2");
+
         Map<String, List<User>> res = new HashMap<>();
         List<Object[]> list = orderRepository.getClientsFavouriteCategories();
         Map<Integer, List<Object[]>> map = list.stream().collect(Collectors.groupingBy(objects -> Integer.parseInt(objects[1].toString())));

@@ -114,6 +114,26 @@ public class ImpMailingService implements Credentials, MaillingService {
     }
 
     @Override
+    public void sendMatchingEmail(User u,Book b) {
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(u.getEmail()));
+            message.setSubject("Nouvelle arrivage ");
+            message.setText("\n\n Un nouveau livre arrive qui vous peut etre vous parait intéressant \n\n"+
+                    "https://bookstore.tn/book/"+b.getId());
+            System.out.println("Sending matching mail ...");
+
+            Transport.send(message);
+            log.info("match mail Sent message successfully to"+u.getEmail());
+
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
+
+
+    @Override
     public void sendConfirmationEmail(String to, String msg) {
         try {
             MimeMessage message = new MimeMessage(session);

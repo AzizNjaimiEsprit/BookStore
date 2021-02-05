@@ -58,17 +58,18 @@ public class WishListServiceImpl implements IWishListService<WishList> {
             e.printStackTrace();
         }
 
-}
-
-    @Override
-    public void returnWishListByUserId(int userId) {
-
     }
 
     @Override
-    public void savedAll(List<Book> book) {
-//        wishListRepository.saveAll(Arrays.asList(book.get(0)));
-
+    public int countBestBookInWishList(Book bestBook) {
+        int count =0;
+        for(WishList wishList: wishListRepository.findAll()){
+            for(Book book: wishList.getBooks()){
+                if(book.getId()== bestBook.getId()){
+                    count++;
+                }
+            }
+        }return count;
     }
 
 }

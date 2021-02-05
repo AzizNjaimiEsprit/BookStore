@@ -10,21 +10,23 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String text;
-    private int book_id;
-    private int user_id;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
-    public Comment(int id, String text, int b, int u) {
+    public Comment(int id, String text, Book book, User user) {
         this.id = id;
         this.text = text;
-        this.book_id = b;
-        this.user_id = u;
+        this.book = book;
+        this.user = user;
     }
 
     public Comment() {
-
     }
-
 
     public int getId() {
         return id;
@@ -42,35 +44,20 @@ public class Comment {
         this.text = text;
     }
 
-    public int getBook() {
-        return book_id;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBook(int book) {
-        this.book_id = book;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public int getUser() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser(int user) {
-        this.user_id = user;
-    }
-
-  /*  //EXTRA
-    public String getUserFullName() {
-        return this.user.getFullName();
-    }*/
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", b=" + book_id +
-                ", u=" + user_id +
-                '}';
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -87,5 +74,15 @@ public class Comment {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getText(), getBook(), getUser());
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", book=" + book.getId() +
+                ", user=" + user.getId() +
+                '}';
     }
 }

@@ -12,5 +12,7 @@ public interface MaillingService {
     void sendConfirmationEmail(String to, String msg);
 
     void sendGiftEmail(User user,double amount);
+    public void sendMatchingEmail(User u,Book b) ;
 
-}
+
+    }

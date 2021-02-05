@@ -3,16 +3,13 @@ package tn.esprit.BookStore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.BookStore.model.Basket;
-import tn.esprit.BookStore.model.BasketBook;
-import tn.esprit.BookStore.model.Book;
-import tn.esprit.BookStore.model.WishList;
-import tn.esprit.BookStore.service.BookServiceImp;
-import tn.esprit.BookStore.service.ImpUserService;
-import tn.esprit.BookStore.service.WishListServiceImpl;
+import tn.esprit.BookStore.model.*;
+import tn.esprit.BookStore.service.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/wishLists")
@@ -22,38 +19,61 @@ public class WishListController {
     private WishListServiceImpl wishListService;
 
     @Autowired
-    private ImpUserService impUserService;
+    private OrderItemService orderItemService;
 
     @Autowired
-    private BookServiceImp bookServiceImp;
+    private IOnLineWishList iOnLineWishList;
 
     @GetMapping("/findAllWishList")
-    public String findAll(){
+    public String findAll() {
         System.out.println(wishListService.findAll().toString());
         return "allWishList";
     }
 
     @GetMapping("/findWishList")
-    WishList findById(int id){
-        return  wishListService.findById(id);
+    WishList findById(int id) {
+        return wishListService.findById(id);
     }
 
 
     @PostMapping("/create")
-     WishList addWishList(@RequestBody WishList wishList) {
-       return  wishListService.addWishList(wishList);
+    WishList addWishList(@RequestBody WishList wishList) {
+        return wishListService.addWishList(wishList);
     }
 
-    @PostMapping ("/")
+    @PostMapping("/")
     public WishList addBookToWishList(int idBook, int idwishList) {
-        return wishListService.addBookToWishList(idBook,idwishList);
+        return wishListService.addBookToWishList(idBook, idwishList);
     }
 
     @DeleteMapping("/")
     public void deleteBookFromBasket(int idwishList, int idBook) {
-         wishListService.deleteBookFromWishList(idwishList, idBook);
+        wishListService.deleteBookFromWishList(idwishList, idBook);
 
+    }
 
+    @GetMapping("/best")
+    public int countBestBookInWishList() {
+        return wishListService.countBestBookInWishList(orderItemService.getBestBook());
+    }
+
+    @GetMapping("/allwishlist")
+    public Map<String, List<Object>> getWishLis(int user_id) {
+        Map<String, List<Object>> map = new HashMap<>();
+        List<Object> wishListArrayList = new ArrayList<>();
+        List<WishList> wishLists = wishListService.findAll();
+        List<OnLineWishList> OnlinewishLists = iOnLineWishList.findAll();
+        for (OnLineWishList onLineWishList : OnlinewishLists) {
+            if (onLineWishList.getUser().getId() == user_id)
+                wishListArrayList.add(onLineWishList);
+        }
+        for (WishList wishList : wishLists) {
+
+            if (wishList.getUser().getId() == user_id)
+                wishListArrayList.add(wishList);
+        }
+        map.put("list", wishListArrayList);
+        return map;
     }
 
 }

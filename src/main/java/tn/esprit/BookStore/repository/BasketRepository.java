@@ -12,6 +12,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 
+import tn.esprit.BookStore.model.Basket;
+
 @Repository
 public interface BasketRepository extends JpaRepository<Basket, Integer> {
 

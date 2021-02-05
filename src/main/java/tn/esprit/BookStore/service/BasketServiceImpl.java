@@ -65,20 +65,5 @@ public class BasketServiceImpl implements IBasketService<Basket>{
 
     }
 
-    @Override
-    public List<String> getAllBooksName(Basket basket) {
-        return null;
-    }
-
-    @Override
-    public void deleteAllBooks(Basket basket) {
-
-    }
-
-    @Override
-    public float getPriceByBookId(int bookId) {
-        return 0;
-    }
-
 
 }

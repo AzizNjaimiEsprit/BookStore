@@ -11,6 +11,7 @@ import tn.esprit.BookStore.service.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/baskets")
@@ -53,17 +54,27 @@ public class BasketController {
 
 
     @PostMapping("/create")
-    Basket  createBasket (int id_user){
-        Basket basket = new Basket();
-        basket.setUser(impUserService.GetUser(id_user));
-        return basketService.ajouterBasket(basket);
+    Map<String ,String> createBasket (int id_user) {
 
+        Map<String, String> map = new HashMap<>();
+        try {
+            Basket basket = new Basket();
+            basket.setUser(impUserService.GetUser(id_user));
+            basketService.ajouterBasket(basket);
+            map.put("message", "create user");
+        } catch (Exception e) {
+            System.out.println("Utilisateur existe déjà!");
+            map.put("message", "Utilisateur existe déjà!");
+
+        }
+
+        return map;
     }
 
     @DeleteMapping("/basket")
     public String deleteBasket(int idBasket) {
         basketService.deleteBasket(idBasket);
-         return "Basket deleted";
+        return "Basket deleted";
     }
 
 
