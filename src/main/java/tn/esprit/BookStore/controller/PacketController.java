@@ -55,9 +55,10 @@ public class PacketController {
 	   public Packet modifypacket( Packet pk) {
 	   return packetService.Update(pk);
 	   }
-    
-    
-    @ResponseBody   
+
+
+    @GetMapping("/voiceSearch")
+    @ResponseBody
     public Packet SearchVoice() {
     	RestTemplate rs=new RestTemplate();
     	String tit=rs.getForObject("http://127.0.0.1:5000/", String.class);

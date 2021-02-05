@@ -7,15 +7,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import tn.esprit.BookStore.model.JwtRequest;
 import tn.esprit.BookStore.model.JwtResponse;
+import tn.esprit.BookStore.model.User;
 import tn.esprit.BookStore.service.JwtUserDetailsService;
 import tn.esprit.BookStore.utils.JwtTokenUtil;
 
@@ -31,10 +27,7 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
-	@RequestMapping({ "/hello" })
-	public String hello() {
-		return "Hello World";
-	}
+
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
@@ -44,7 +37,7 @@ public class JwtAuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		
+
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 
@@ -57,5 +50,5 @@ public class JwtAuthenticationController {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 	}
-					
+
 }

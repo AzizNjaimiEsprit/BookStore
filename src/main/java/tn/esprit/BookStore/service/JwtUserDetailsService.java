@@ -13,16 +13,16 @@ import tn.esprit.BookStore.repository.UserRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
-@Autowired
-UserRepository srv;
+	@Autowired
+	UserRepository srv;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		if(srv.Auth(username)==null) {
 			throw new UsernameNotFoundException("No user with: " + username);
-				}
+		}
 		return new User(srv.Auth(username).getLogin(),srv.Auth(username).getPassword(),new ArrayList<>());
-		
-			
+
+
 	}
 }

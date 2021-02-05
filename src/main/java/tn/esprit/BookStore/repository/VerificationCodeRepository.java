@@ -17,6 +17,6 @@ public interface VerificationCodeRepository extends JpaRepository<Verification_C
 	@Modifying
 	@Transactional
 	@Query("DELETE FROM Verification_Code u WHERE u.user_id= :user_id")
-	public void DeletedVerific(@Param("user_id") User user_id);
+	void DeletedVerific(@Param("user_id") User user_id);
 }
  

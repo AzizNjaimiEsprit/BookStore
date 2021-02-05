@@ -24,8 +24,8 @@ public interface PacketRepository extends JpaRepository<Packet,Long > {
 	@Transactional
 	public void RemoveAndSetNull(@Param("pkt") Packet x);
 	
-	@Query("SELECT u FROM Packet u WHERE u.titre= :titre or objective= :titre or objectif= :titre")
+	@Query("SELECT u FROM Packet u WHERE u.titre= :titre or objectif= :titre")
 	public Packet voiceSearch(@Param("titre") String titre);
-	
-}  
+
+}
          

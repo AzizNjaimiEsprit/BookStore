@@ -2,12 +2,8 @@ package tn.esprit.BookStore.model;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
+
 @Entity
 public class FavoriteCategorie implements Serializable {
    
@@ -19,15 +15,19 @@ public class FavoriteCategorie implements Serializable {
 	@EmbeddedId
     private FavouriteCategorieFK FavouriteCategorieFK;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @MapsId("user_id")
-    @JoinColumn(name="user_id")
-    private User User; 
-    
-    @ManyToOne(fetch=FetchType.EAGER)
-    @MapsId("category_id")
-    @JoinColumn(name="category_id")
-    private Category Category;
+
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id", insertable=false, updatable=false)
+	private User User;
+
+	@ManyToOne
+	@JoinColumn(name = "category_id", referencedColumnName = "id", insertable=false, updatable=false)
+	private Category Category;
+
+
+
+
 
 	public FavouriteCategorieFK getFavouriteCategorieFK() {
 		return FavouriteCategorieFK;
