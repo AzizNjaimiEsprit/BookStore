@@ -3,7 +3,11 @@ package tn.esprit.BookStore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.BookStore.entities.*;
+
+import tn.esprit.BookStore.model.Answer;
+import tn.esprit.BookStore.model.OnlineBook;
+import tn.esprit.BookStore.model.Question;
+import tn.esprit.BookStore.model.Quiz;
 import tn.esprit.BookStore.service.IQuizService;
 import java.util.Set;
 

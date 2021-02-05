@@ -3,8 +3,7 @@ package tn.esprit.BookStore.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.MethodNotAllowedException;
-import tn.esprit.BookStore.entities.*;
+import tn.esprit.BookStore.model.*;
 import tn.esprit.BookStore.exception.ApiRequestException;
 import tn.esprit.BookStore.repository.*;
 
@@ -24,13 +23,13 @@ public class QuizServiceImp implements IQuizService {
     QuizRepo quizRepo;
 
     @Autowired
-    UserRepo userRepo;
+    UserRepository userRepo;
 
     @Autowired
-    OnlineBookRepo onlineBookRepo;
+    OnlineBookRepository onlineBookRepo;
 
     @Autowired
-    FidelityCardRepo fidelityCardRepo;
+    FidelityCardRepository fidelityCardRepo;
 
     @Override
     public Answer addAnswer(Answer answer) {
@@ -137,10 +136,10 @@ public class QuizServiceImp implements IQuizService {
                 throw new EntityNotFoundException("No quiz with that ID was found!");
             }
             Quiz quiz1 = quizRepo.findById(quiz.getId()).get();
-            if (!userRepo.findById(quiz1.getUser().getId()).isPresent()) {
+            if (userRepo.findById(quiz1.getUser().getId()) == null) {
                 throw new EntityNotFoundException("No user with that ID was found!");
             }
-            User user1 = userRepo.findById(quiz1.getUser().getId()).get();
+            User user1 = userRepo.findById(quiz1.getUser().getId());
             quiz1.setUser(user1);
             quizRepo.save(quiz1);
         }

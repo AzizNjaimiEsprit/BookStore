@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-import tn.esprit.BookStore.entities.*;
+import tn.esprit.BookStore.model.*;
 import tn.esprit.BookStore.exception.ApiRequestException;
 import tn.esprit.BookStore.repository.*;
 
@@ -23,16 +23,16 @@ public class LibraryServiceImp implements LibraryService {
     LibraryRepo libraryRepo;
 
     @Autowired
-    UserRepo userRepo;
+    UserRepository userRepo;
 
     @Autowired
-    OnlineBookRepo onlineBookRepo;
+    OnlineBookRepository onlineBookRepo;
 
     @Autowired
     QuizRepo quizRepo;
 
     @Autowired
-    CategoryRepo categoryRepo;
+    CategoryRepository categoryRepo;
 
     @Autowired
     SendMail sendMail;
@@ -78,7 +78,7 @@ public class LibraryServiceImp implements LibraryService {
     @Override
     public List<Library> findLibraryByUserId(Library library) {
         try{
-            List<Library> userLibrary = libraryRepo.findLibraryItems(library.getUser().getId());
+            List<Library> userLibrary = libraryRepo.findLibraryItems((int) library.getUser().getId());
             if(userLibrary.size() == 0){
                 throw new EntityNotFoundException("User doesn't have a library");
             }
@@ -96,7 +96,7 @@ public class LibraryServiceImp implements LibraryService {
     @Override
     public void editLibrary(Library library) {
         try {
-        Library updatedLibrary=libraryRepo.findLibraryItem(library.getUser().getId(),library.getOnlineBook().getId());
+        Library updatedLibrary=libraryRepo.findLibraryItem((int) library.getUser().getId(),library.getOnlineBook().getId());
         if(updatedLibrary==null){
             throw new EntityNotFoundException("No library with that ID was found!");
         }
@@ -105,7 +105,7 @@ public class LibraryServiceImp implements LibraryService {
             updatedLibrary.setStatus(Status.Recently_added);
         if(updatedLibrary.getReachedPage()>0)
             updatedLibrary.setStatus(Status.On_progress);
-        if(updatedLibrary.getReachedPage()==updatedLibrary.getOnlineBook().getBook().getNbPages())
+        if(updatedLibrary.getReachedPage()==updatedLibrary.getOnlineBook().getBook().getNbPage())
             updatedLibrary.setStatus(Status.Finished);
         libraryRepo.save(updatedLibrary);
         }
@@ -121,11 +121,11 @@ public class LibraryServiceImp implements LibraryService {
     @Override
     public Book suggestBook(User user){
         try{
-            if(!userRepo.findById(user.getId()).isPresent()){
+            if(userRepo.findById(user.getId()) == null){
                 throw new EntityNotFoundException("No User with that ID was found!");
             }
-            User user1 = userRepo.findById(user.getId()).get();
-            Set<Book> books= libraryRepo.getPurchasedBooks(user1.getId());
+            User user1 = userRepo.findById(user.getId());
+            Set<Book> books= libraryRepo.getPurchasedBooks((int) user1.getId());
             Map<Integer,Long> result =books.stream()
                     .collect(Collectors.groupingBy(book -> book.getCategory().getId(),Collectors.counting()));
 
@@ -150,9 +150,9 @@ public class LibraryServiceImp implements LibraryService {
 
                 suggestedBook = booksOfSuggestedCategory.get(index);
             }
-            while(libraryRepo.findLibraryItem(user1.getId(),  suggestedBook.getId()) != null);
+            while(libraryRepo.findLibraryItem((int) user1.getId(),  suggestedBook.getId()) != null);
 
-            sendMail.sendEmail(user1, "Dear "+ user1.getFullName() +
+            sendMail.sendEmail(user1, "Dear "+ user1.getFull_name() +
                     ", \n\nThank you for being a loyal customer and we hope that you and your family are doing well, \n" +
                     "We have noticed that you are interested in this category " +suggedtedCategory.getName() +
                     " and we are happy to have a large collection of books in this category." +
@@ -174,7 +174,7 @@ public class LibraryServiceImp implements LibraryService {
     @Override
     public void readBook(Library library,HttpServletResponse response) throws IOException {
         try {
-            String bookTitle = libraryRepo.getBookTitle(library.getOnlineBook().getId(), library.getUser().getId());
+            String bookTitle = libraryRepo.getBookTitle(library.getOnlineBook().getId(), (int) library.getUser().getId());
             String fileName = "onlineBooks/" + bookTitle + ".pdf";
             ClassLoader classLoader = getClass().getClassLoader();
             File file = new File(classLoader.getResource(fileName).getFile());

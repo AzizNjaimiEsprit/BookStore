@@ -1,8 +1,8 @@
 package tn.esprit.BookStore.service;
 
-import tn.esprit.BookStore.entities.Book;
-import tn.esprit.BookStore.entities.Library;
-import tn.esprit.BookStore.entities.User;
+import tn.esprit.BookStore.model.Book;
+import tn.esprit.BookStore.model.Library;
+import tn.esprit.BookStore.model.User;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

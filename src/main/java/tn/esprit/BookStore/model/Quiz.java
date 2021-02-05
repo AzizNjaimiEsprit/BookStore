@@ -1,4 +1,4 @@
-package tn.esprit.BookStore.entities;
+package tn.esprit.BookStore.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

@@ -1,4 +1,4 @@
-package tn.esprit.BookStore.entities;
+package tn.esprit.BookStore.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,8 +10,6 @@ public class Library implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-
 
 	@OneToOne
 	private User user;

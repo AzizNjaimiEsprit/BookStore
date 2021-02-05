@@ -1,4 +1,4 @@
-package tn.esprit.BookStore.entities;
+package tn.esprit.BookStore.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;

@@ -1,7 +1,5 @@
 package tn.esprit.BookStore.service;
-
-import org.springframework.http.ResponseEntity;
-import tn.esprit.BookStore.entities.*;
+import tn.esprit.BookStore.model.*;
 
 import java.util.Set;
 

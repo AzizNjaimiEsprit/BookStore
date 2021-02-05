@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import tn.esprit.BookStore.entities.Answer;
+import tn.esprit.BookStore.model.Answer;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;

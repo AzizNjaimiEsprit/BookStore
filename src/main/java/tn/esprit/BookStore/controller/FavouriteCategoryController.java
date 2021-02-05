@@ -35,7 +35,7 @@ public class FavouriteCategoryController {
 		public List<User> getFcListcateg(@PathVariable("id") Long id) {
 			System.out.println(id);
 
-	    	return fav_c.getAllUserByCategory(ctr.findById(id));
+	    	return fav_c.getAllUserByCategory(ctr.findById(Math.toIntExact(id)));
 	}
 
 }

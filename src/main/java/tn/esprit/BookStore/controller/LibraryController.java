@@ -2,13 +2,10 @@ package tn.esprit.BookStore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.BookStore.entities.Book;
-import tn.esprit.BookStore.entities.Library;
-import tn.esprit.BookStore.entities.User;
-import tn.esprit.BookStore.exception.ApiRequestException;
-import tn.esprit.BookStore.service.IChatBot;
+import tn.esprit.BookStore.model.Book;
+import tn.esprit.BookStore.model.Library;
+import tn.esprit.BookStore.model.User;
 import tn.esprit.BookStore.service.LibraryService;
 import tn.esprit.BookStore.service.SmsSender;
 import javax.servlet.http.HttpServletResponse;
@@ -23,9 +20,6 @@ public class LibraryController {
 
     @Autowired
     SmsSender smsSender;
-
-    @Autowired
-    IChatBot chatBot;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/addLibrary", produces = { "application/json"})
