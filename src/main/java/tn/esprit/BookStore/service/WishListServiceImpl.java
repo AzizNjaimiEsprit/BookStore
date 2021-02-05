@@ -62,14 +62,23 @@ public class WishListServiceImpl implements IWishListService<WishList> {
 
     @Override
     public int countBestBookInWishList(Book bestBook) {
-        int count =0;
-        for(WishList wishList: wishListRepository.findAll()){
-            for(Book book: wishList.getBooks()){
-                if(book.getId()== bestBook.getId()){
-                    count++;
+        int count = 0;
+        try {
+            System.out.println("The best Book is " +bestBook);
+
+            for (WishList wishList : wishListRepository.findAll()) {
+                for (Book book : wishList.getBooks()) {
+                    if (book.getId() == bestBook.getId()) {
+                        count++;
+                    }
                 }
             }
-        }return count;
-    }
 
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+        return count;
+    }
 }

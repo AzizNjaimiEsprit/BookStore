@@ -25,9 +25,8 @@ public class WishListController {
     private IOnLineWishList iOnLineWishList;
 
     @GetMapping("/findAllWishList")
-    public String findAll() {
-        System.out.println(wishListService.findAll().toString());
-        return "allWishList";
+    public List <WishList> findAll() {
+      return  wishListService.findAll();
     }
 
     @GetMapping("/findWishList")
@@ -60,11 +59,17 @@ public class WishListController {
     @GetMapping("/allwishlist")
     public Map<String, List<Object>> getWishLis(int user_id) {
         Map<String, List<Object>> map = new HashMap<>();
+
         List<Object> wishListArrayList = new ArrayList<>();
+
         List<WishList> wishLists = wishListService.findAll();
-        List<OnLineWishList> OnlinewishLists = iOnLineWishList.findAll();
-        for (OnLineWishList onLineWishList : OnlinewishLists) {
+
+        List<OnLineWishList> onlinewishList = iOnLineWishList.findAll();
+
+        for (OnLineWishList onLineWishList : onlinewishList) {
+
             if (onLineWishList.getUser().getId() == user_id)
+
                 wishListArrayList.add(onLineWishList);
         }
         for (WishList wishList : wishLists) {
