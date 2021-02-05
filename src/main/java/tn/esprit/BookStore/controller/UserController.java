@@ -107,7 +107,7 @@ public class UserController {
     }
     @GetMapping("/isVerified")
     @ResponseBody
-    public boolean isverify( User u) {
+    public boolean isverify(User u) {
         return srvUsr.isVerified(u.getLogin(),u.getPassword());
     }
     @RequestMapping("/hello")
@@ -118,3 +118,4 @@ public class UserController {
 
 
 }
+ 

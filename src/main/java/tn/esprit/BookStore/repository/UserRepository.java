@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u.id FROM User u WHERE u.login= :login")
 	long SelectByid(@Param("login") String login);
 	@Query("select u from User u join Verification_Code v on u.id=v.user_id WHERE u.login= :login")
-	User isverified(String login);
+	User isverified(String login);  
 	@Query("SELECT u FROM User u WHERE u.email= :email")
 	User sms(@Param("email") String email);
 	@Query("select case when count(u) > 0 then true else false end from User u WHERE u.email= :email OR u.login = :login")

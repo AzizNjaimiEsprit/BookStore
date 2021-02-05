@@ -14,7 +14,7 @@ public class Verification_Code {
 	    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String code;
-	
+	 
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user_id;

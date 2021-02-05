@@ -1,5 +1,7 @@
 package tn.esprit.BookStore.service;
 
+import tn.esprit.BookStore.model.Category;
+import tn.esprit.BookStore.model.Packet;
 import tn.esprit.BookStore.model.User;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public interface IUserService {
     public void Delete(long id);
     public void ifNotverifiedVerif(long id,String verification_code);
     public String UpdateRestPassword(int code,String password,long id);
+
     /* 
     public String VerifyAccount();
     public Void AddAdmin();

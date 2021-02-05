@@ -1,65 +1,64 @@
 package tn.esprit.BookStore.model;
-
+import java.util.Set;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Entity
 public class User implements Serializable {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    @Id
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-    private String full_name;
-    private String email;
-    private int telephone;
-    private String login;
-    private String password;
-    private int role;
-    private String address;
-    private int zipCode;
-
+private long id;
+private String full_name;
+private String email;
+private int telephone;
+private String login;
+private String password;
+private int role;
+private String address;
+private int zipCode;
+@OneToMany(mappedBy = "User")
+private Set<FavoriteCategorie> Fcu;
 
 
     public User(String full_name, String email, int telephone, String login, String password, int role, String address,
-                int zipCode) {
-        super();
-        this.full_name = full_name;
-        this.email = email;
-        this.telephone = telephone;
-        this.login = login;
-        this.password = password;
-        this.role = role;
-        this.address = address;
-        this.zipCode = zipCode;
-    }
+		int zipCode) {
+	super();
+	this.full_name = full_name;
+	this.email = email;
+	this.telephone = telephone;
+	this.login = login;
+	this.password = password;
+	this.role = role;
+	this.address = address;
+	this.zipCode = zipCode;
+}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getAddress() {
+	return address;
+}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+public void setAddress(String address) {
+	this.address = address;
+}
 
-    public int getZipCode() {
-        return zipCode;
-    }
+public int getZipCode() {
+	return zipCode;
+}
 
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
-    }
+public void setZipCode(int zipCode) {
+	this.zipCode = zipCode;
+}
 
-    public User() {
-
-    }
+	public User() {  
+ 
+    }  
 
     public User( String full_name, String email, int telephone, String login, String password, int role) {
 
@@ -68,7 +67,7 @@ public class User implements Serializable {
         this.telephone = telephone;
         this.login = login;
         this.password = password;
-        this.role = role;
+        this.role = role; 
     }
 
     @Override
@@ -142,11 +141,10 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", full_name=" + full_name + ", email=" + email + ", telephone=" + telephone
-                + ", login=" + login + ", password=" + password + ", role=" + role + "]";
-    }
-
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", full_name=" + full_name + ", email=" + email + ", telephone=" + telephone
+				+ ", login=" + login + ", password=" + password + ", role=" + role + "]";
+	}
+    
 }
-

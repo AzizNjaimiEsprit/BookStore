@@ -157,7 +157,7 @@ public class ServiceUser implements IUserService{
 
 	@Override
 	public void mailling(String mail,String message) {
-		final String username = "************";
+		final String username = "*************";
 		final String password = "**********";
 		String fromEmail = "nourabes12@gmail.com";
 		Properties properties = new Properties();
@@ -189,11 +189,11 @@ public class ServiceUser implements IUserService{
 	}
 	@Override
 	public void sendsms(String str,int body) {
-		Twilio.init("AC4bde5833*********", "7e16edda1***************");
+		Twilio.init("********************", "*******************");
 		try {
 			com.twilio.rest.api.v2010.account.Message message = com.twilio.rest.api.v2010.account.Message.creator(
 					new PhoneNumber("+216"+str), // To number
-					new PhoneNumber("+13*******"), // From number
+					new PhoneNumber("+*************"), // From number
 					"Verification code to reset password is :"+body
 			).create();
 		}catch (Exception e) {
