@@ -1,115 +1,97 @@
-package tn.esprit.BookStore.model;
+package tn.esprit.BookStore.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Library implements Serializable {
+public class Library implements Serializable{
 
-    @EmbeddedId
-    private LibraryPK id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false, nullable = false)
-    private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", insertable = false, updatable = false, nullable = false)
-    private OnlineBook book;
 
-    @Column(name = "status", columnDefinition = "varchar(20) default 'Recently added'")
-    private String status;
-    @Column(name = "page_reached", columnDefinition = "integer default 0")
+
+	@OneToOne
+	private User user;
+
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "varchar(255) default Recently_added")
+	private Status status;
+
+	@Column(name="page_reached",columnDefinition = "integer default 0")
     private int reachedPage;
-    @Column(name = "quiz_score", columnDefinition = "integer default 0")
-    private int quizScore;
 
-    public Library() {
+	@OneToOne
+	@JoinColumn(name = "online_book_id")
+	private OnlineBook onlineBook;
 
-    }
+	public Library() {
 
-    public Library(LibraryPK id, User user, OnlineBook book, String status, int reachedPage, int quizScore) {
-        this.id = id;
-        this.user = user;
-        this.book = book;
-        this.status = status;
-        this.reachedPage = reachedPage;
-        this.quizScore = quizScore;
-    }
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Library library = (Library) o;
-        return Objects.equals(id, library.id) &&
-                Objects.equals(user, library.user) &&
-                Objects.equals(book, library.book);
-    }
+	public Status getStatus() {
+		return status;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, user, book);
-    }
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
-    public LibraryPK getId() {
-        return id;
-    }
+	public int getReachedPage() {
+		return reachedPage;
+	}
 
-    public void setId(LibraryPK id) {
-        this.id = id;
-    }
+	public void setReachedPage(int reachedPage) {
+		this.reachedPage = reachedPage;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public OnlineBook getBook() {
-        return book;
-    }
+	public OnlineBook getOnlineBook() {
+		return onlineBook;
+	}
 
-    public void setBook(OnlineBook book) {
-        this.book = book;
-    }
+	public void setOnlineBook(OnlineBook onlineBook) {
+		this.onlineBook = onlineBook;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public int getReachedPage() {
-        return reachedPage;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Library library = (Library) o;
+		return id == library.id;
+	}
 
-    public void setReachedPage(int reachedPage) {
-        this.reachedPage = reachedPage;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
-    public int getQuizScore() {
-        return quizScore;
-    }
-
-    public void setQuizScore(int quizScore) {
-        this.quizScore = quizScore;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Library{" +
-                "user=" + user +
-                ", book=" + book +
-                ", status='" + status + '\'' +
-                ", reachedPage=" + reachedPage +
-                ", quizScore=" + quizScore +
-                '}';
-    }
-
+	@Override
+	public String toString() {
+		return "Library{" +
+				"id=" + id +
+				", onlineBook=" + onlineBook +
+				", user=" + user +
+				", status=" + status +
+				", reachedPage=" + reachedPage +
+				'}';
+	}
 }

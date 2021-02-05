@@ -1,5 +1,6 @@
-package tn.esprit.BookStore.model;
+package tn.esprit.BookStore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,25 +12,34 @@ public class Answer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
-    @Column(name = "first_answer")
+
+    @Column(name="first_answer",nullable = false)
     private String firstAnswer;
-    @Column(name = "second_answer")
+
+    @Column(name="second_answer",nullable = false)
     private String secondAnswer;
-    @Column(name = "third_answer")
+
+    @Column(name="third_answer",nullable = false)
     private String thirdAnswer;
-    @Column(name = "correct_answer")
+
+    @Column(name="correct_answer",nullable = false)
     private String correctAnswer;
 
-    public Answer(int id, String firstAnswer, String secondAnswer, String thirdAnswer, String correctAnswer) {
-        this.id = id;
+    @JsonIgnore
+    @OneToOne(mappedBy="answer")
+    private Question question;
+
+
+    public Answer() {
+
+    }
+
+    public Answer(int id,String firstAnswer, String secondAnswer, String thirdAnswer, String correctAnswer) {
+        this.id=id;
         this.firstAnswer = firstAnswer;
         this.secondAnswer = secondAnswer;
         this.thirdAnswer = thirdAnswer;
         this.correctAnswer = correctAnswer;
-    }
-
-    public Answer() {
-
     }
 
     public int getId() {
@@ -72,6 +82,14 @@ public class Answer implements Serializable {
         this.correctAnswer = correctAnswer;
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -94,6 +112,7 @@ public class Answer implements Serializable {
                 ", secondAnswer='" + secondAnswer + '\'' +
                 ", thirdAnswer='" + thirdAnswer + '\'' +
                 ", correctAnswer='" + correctAnswer + '\'' +
+                ", question=" + question +
                 '}';
     }
 }

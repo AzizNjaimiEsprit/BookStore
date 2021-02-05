@@ -1,5 +1,6 @@
-package tn.esprit.BookStore.model;
+package tn.esprit.BookStore.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,10 +14,15 @@ public class Question implements Serializable {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "answer_id", nullable = false, unique = true)
+    @JoinColumn(unique = true)
     private Answer answer;
-    @Column
+
+    @Column(nullable = false,unique = true)
     private String question;
+
+    @JsonBackReference
+    @ManyToOne
+    private Quiz quiz;
 
     public Question() {
     }
@@ -51,20 +57,26 @@ public class Question implements Serializable {
         this.question = question;
     }
 
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return id == question.id &&
-                Objects.equals(answer, question.answer);
+        return id == question.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, answer);
+        return Objects.hash(id);
     }
-
 
     @Override
     public String toString() {
@@ -72,6 +84,7 @@ public class Question implements Serializable {
                 "id=" + id +
                 ", answer=" + answer +
                 ", question='" + question + '\'' +
+                ", quiz=" + quiz +
                 '}';
     }
 }

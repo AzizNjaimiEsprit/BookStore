@@ -1,8 +1,14 @@
-package tn.esprit.BookStore.model;
+package tn.esprit.BookStore.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 
 @Entity
 public class Quiz implements Serializable {
@@ -10,20 +16,26 @@ public class Quiz implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy="quiz")
+    private Set<Question> questions = new HashSet<Question>();
+
     @OneToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private OnlineBook book;
+    @JoinColumn(name = "online_book_id")
+    private OnlineBook onlineBook;
+
     @OneToOne
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
+    private User user;
+
+    @Column(columnDefinition = "integer default 0")
+    private int quizScore;
 
     public Quiz() {
     }
 
-    public Quiz(int id, OnlineBook book, Question question) {
+    public Quiz(int id) {
         this.id = id;
-        this.book = book;
-        this.question = question;
     }
 
     public int getId() {
@@ -34,20 +46,37 @@ public class Quiz implements Serializable {
         this.id = id;
     }
 
-    public OnlineBook getBook() {
-        return book;
+
+    public Set<Question> getQuestions() {
+        return questions;
     }
 
-    public void setBook(OnlineBook book) {
-        this.book = book;
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 
-    public Question getQuestion() {
-        return question;
+    public OnlineBook getOnlineBook() {
+        return onlineBook;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setOnlineBook(OnlineBook onlineBook) {
+        this.onlineBook = onlineBook;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getQuizScore() {
+        return quizScore;
+    }
+
+    public void setQuizScore(int quizScore) {
+        this.quizScore = quizScore;
     }
 
     @Override
@@ -55,22 +84,21 @@ public class Quiz implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quiz quiz = (Quiz) o;
-        return id == quiz.id &&
-                Objects.equals(book, quiz.book) &&
-                Objects.equals(question, quiz.question);
+        return id == quiz.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, book, question);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Quiz{" +
                 "id=" + id +
-                ", book=" + book +
-                ", question=" + question +
+                ", onlineBook=" + onlineBook +
+                ", user=" + user +
+                ", quizScore=" + quizScore +
                 '}';
     }
 }
